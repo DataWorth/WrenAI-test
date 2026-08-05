@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=/opt/wren-agent-eval
+PROJECT="$ROOT/project"
+RUNTIME="$ROOT/runtime"
+BAILIAN="$RUNTIME/bailian.env"
+NETWORK=wren-eval-net
+CLI_IMAGE=wren-eval-cli:74bf59e1
+EXECUTOR_IMAGE=wren-eval-executor:74bf59e1
+AGENT_IMAGE=wren-eval-agent:0.1
+WREN_HOME="$RUNTIME/wren-home"
+
+usage() {
+  echo "usage: agentctl start | semantic | chatbi <question> | benchmark [model]"
+}
+
+start_services() {
+  docker rm -f wren-eval-mcp wren-eval-executor >/dev/null 2>&1 || true
+  docker run -d --name wren-eval-mcp --restart unless-stopped \
+    --network "$NETWORK" --env-file "$PROJECT/.env" \
+    -e WREN_HOME=/wren-home \
+    -v "$PROJECT:/workspace:ro" -v "$WREN_HOME:/wren-home:ro" \
+    "$CLI_IMAGE" serve mcp --transport http --host 0.0.0.0 --port 8080 \
+    --project /workspace --profile mysql-test --quiet >/dev/null
+  docker run -d --name wren-eval-executor --restart unless-stopped \
+    --network "$NETWORK" --env-file "$PROJECT/.env" \
+    -e WREN_HOME=/wren-home \
+    -v "$PROJECT:/workspace:rw" -v "$WREN_HOME:/wren-home:ro" \
+    "$EXECUTOR_IMAGE" >/dev/null
+  echo "services_started"
+}
+
+semantic() {
+  : > "$RUNTIME/agent-empty.env"
+  chmod 0444 "$RUNTIME/agent-empty.env"
+  chown 10001:10001 "$PROJECT"
+  chown -R 10001:10001 "$PROJECT/models" "$PROJECT/knowledge/rules"
+  chown 10001:10001 "$PROJECT/relationships.yml"
+  docker run --rm --network "$NETWORK" --env-file "$BAILIAN" \
+    -v "$PROJECT:/workspace:rw" \
+    -v "$RUNTIME/agent-empty.env:/workspace/.env:ro" \
+    -w /workspace \
+    "$AGENT_IMAGE" /app/semantic-agent.mjs
+}
+
+chatbi() {
+  shift
+  docker run --rm --network "$NETWORK" --env-file "$BAILIAN" \
+    "$AGENT_IMAGE" /app/chatbi-agent.mjs "$@"
+}
+
+benchmark() {
+  model=$1
+  if [ -z "$model" ]; then model=qwen3.7-plus; fi
+  safe=$(printf '%s' "$model" | tr -cs 'A-Za-z0-9._-' '_')
+  runid=$(date -u +%Y%m%dT%H%M%SZ)
+  run_dir="$ROOT/results/$safe/$runid"
+  mkdir -p "$run_dir/logs"
+  chown -R 10001:10001 "$run_dir"
+  failures=0
+  for id in $(seq 1 100); do
+    echo "[$id/100] $model"
+    set +e
+    docker run --rm --network "$NETWORK" --env-file "$BAILIAN" \
+      -e ANTHROPIC_MODEL="$model" \
+      -e ANTHROPIC_DEFAULT_HAIKU_MODEL="$model" \
+      -e ANTHROPIC_DEFAULT_SONNET_MODEL="$model" \
+      -e ANTHROPIC_DEFAULT_OPUS_MODEL="$model" \
+      -e ANTHROPIC_DEFAULT_SUBAGENT_MODEL="$model" \
+      -v "$ROOT/benchmarks:/benchmarks:ro" -v "$run_dir:/results:rw" \
+      "$AGENT_IMAGE" /app/chatbi-eval.mjs "$id" >"$run_dir/logs/$id.log" 2>&1
+    rc=$?
+    set -e
+    if [ "$rc" -ne 0 ]; then
+      failures=$((failures + 1))
+      echo "question $id exited $rc"
+    fi
+  done
+  docker run --rm --network "$NETWORK" --env-file "$PROJECT/.env" --env-file "$BAILIAN" \
+    -e ANTHROPIC_MODEL="$model" -e WREN_HOME=/wren-home \
+    -v "$PROJECT:/workspace:ro" -v "$WREN_HOME:/wren-home:ro" \
+    -v "$ROOT/benchmarks:/benchmarks:ro" -v "$run_dir:/results:rw" \
+    -v "$RUNTIME/score.py:/opt/score.py:ro" \
+    --entrypoint python3 "$EXECUTOR_IMAGE" /opt/score.py | tee "$run_dir/score.log"
+  echo "result_dir=$run_dir"
+  echo "agent_failures=$failures"
+}
+
+command=${1:-}
+if [ -z "$command" ]; then usage; exit 2; fi
+case "$command" in
+  start) start_services ;;
+  semantic) semantic ;;
+  chatbi) chatbi "$@" ;;
+  benchmark) shift; model=${1:-}; if [ -z "$model" ]; then model=qwen3.7-plus; fi; benchmark "$model" ;;
+  *) usage; exit 2 ;;
+esac

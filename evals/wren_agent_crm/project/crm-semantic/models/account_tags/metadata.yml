@@ -1,0 +1,84 @@
+name: account_tags
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: account_tags
+properties:
+  description: "客户标签关联 (account tags) — many-to-many relationship between accounts and tags. Association table — not a standalone business entity."
+columns:
+- name: account_tag_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "关联记录名称 (association record name)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Test placeholder status. In this association table, status is not a business metric."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this association table, region is not a valid analysis dimension."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this association table, source is not a valid analysis dimension."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this association table, industry is not a valid analysis dimension."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: account_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to accounts — the tagged account. Join key only."
+- name: tag_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to tags — the tag applied. Join key only."
+primary_key: account_tag_id

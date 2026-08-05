@@ -1,0 +1,79 @@
+name: email_events
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: email_events
+properties:
+  description: "邮件事件 (email events) — tracking events for sent emails (opens, clicks, bounces). [pii] Contains potential PII: record_name may include sensitive communication content."
+columns:
+- name: email_event_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "事件名称 (event name or type). [pii] Potential PII — sensitive communication content."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Test placeholder status. In this communication table, status is not a business metric."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this communication table, region is not a valid analysis dimension."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this communication table, source is not a valid analysis dimension."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this communication table, industry is not a valid analysis dimension."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: email_message_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to email_messages — the parent email. Join key only."
+primary_key: email_event_id

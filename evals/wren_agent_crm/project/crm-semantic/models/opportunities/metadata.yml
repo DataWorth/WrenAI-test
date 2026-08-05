@@ -1,0 +1,94 @@
+name: opportunities
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: opportunities
+properties:
+  description: "销售机会 (sales opportunities) — potential deals in the sales pipeline. Each opportunity represents a qualified sales prospect with an estimated value and probability of closing."
+columns:
+- name: opportunity_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier for the opportunity record. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "Opportunity name or deal title."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "机会状态 (opportunity status). [enum] Valid values: 赢单 (won — closed successfully), 输单 (lost — lost to competitor or abandoned), 进行中 (in progress — active in pipeline)."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "销售大区 (sales region). [enum] Valid values: 华东, 华北, 华南, 华中, 西南. Analysis dimension for regional pipeline analysis."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "获客或创建来源 (acquisition or creation source). [enum] Valid values: 官网咨询, 行业峰会, 渠道伙伴, 客户转介绍, 内容营销. Analysis dimension for lead source tracking."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "客户所属行业 (customer industry). Analysis dimension for market segmentation."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Opportunity sales stage. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "机会金额 (opportunity amount). [unit] CNY pre-tax demo amount. Do not aggregate across different document types."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "赢单概率 (win probability). [unit] Percentage 0–100. Only valid for opportunities — represents likelihood of closing the deal."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "件数 (piece count / quantity). Number of units or items in the opportunity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "单价 (unit price). [unit] CNY price per unit."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: account_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to accounts — the customer organization for this opportunity. Join key only."
+- name: lead_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to leads — the source lead that generated this opportunity. Join key only."
+- name: owner_user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to crm_users — the opportunity owner (sales rep). Join key only."
+- name: opportunity_stage_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to opportunity_stages — the current sales stage. Join key only."
+primary_key: opportunity_id

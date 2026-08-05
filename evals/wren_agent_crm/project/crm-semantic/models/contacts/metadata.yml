@@ -1,0 +1,84 @@
+name: contacts
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: contacts
+properties:
+  description: "客户联系人 (customer contacts) — people associated with customer accounts. [pii] Contains potential PII: record_name and contact details should not be used as default retrieval or aggregation text. Treat as sensitive communication content."
+columns:
+- name: contact_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier for the contact record. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "Contact name or display name. [pii] Potential PII — sensitive communication content."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Contact lifecycle status. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "销售大区 (sales region). [enum] Valid values: 华东, 华北, 华南, 华中, 西南. Analysis dimension inherited from account relationship."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "获客或创建来源 (acquisition or creation source). [enum] Valid values: 官网咨询, 行业峰会, 渠道伙伴, 客户转介绍, 内容营销. Analysis dimension inherited from account relationship."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "客户所属行业 (customer industry). Analysis dimension inherited from account relationship."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Contact stage. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount in this table — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: account_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to accounts — the customer organization this contact belongs to. Join key only."
+- name: owner_user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to crm_users — the contact owner. Join key only."
+primary_key: contact_id

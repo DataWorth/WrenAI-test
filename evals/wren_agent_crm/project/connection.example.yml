@@ -1,0 +1,7 @@
+datasource: mysql
+host: wren-eval-mysql
+port: 3306
+database: crm_demo
+user: wren_reader
+password: <mysql-reader-password>
+ssl_mode: disabled

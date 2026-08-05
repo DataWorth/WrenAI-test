@@ -1,0 +1,10 @@
+import fs from "node:fs";
+import { runAgent } from "./agent-common.mjs";
+const id = Number(process.argv[2]);
+const tests = fs.readFileSync("/benchmarks/crm_100_qna.jsonl","utf8").trim().split("\n").map(JSON.parse);
+const test = tests.find((x) => x.id === id);
+if (!test) throw new Error("找不到题目：" + id);
+const prompt = `你是 Chat BI 评测 Agent。只使用 wren_chatbi MCP 工具回答本题。必须先 dry_plan、dry_run，再 run_sql。不要猜测；最终简洁说明结果。题目：${test.question}`;
+const result = await runAgent(prompt, "wren_chatbi", "http://wren-eval-mcp:8080/mcp", 16);
+fs.writeFileSync("/results/" + id + ".json", JSON.stringify({id, question:test.question, run_sql:result.runSql, result_subtype:result.resultSubtype, final_text:result.finalText}, null, 2));
+if (result.resultSubtype !== "success") process.exitCode = 1;

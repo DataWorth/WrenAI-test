@@ -1,0 +1,84 @@
+name: renewals
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: renewals
+properties:
+  description: "续约 (renewals) — contract renewal records tracking repeat business with existing customers. Each renewal represents an extension or follow-up contract."
+columns:
+- name: renewal_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier for the renewal record. Join key only, not a business document number."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "续约记录名称 (renewal name or title)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "续约状态 (renewal status). [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "销售大区 (sales region). [enum] Valid values: 华东, 华北, 华南, 华中, 西南. Analysis dimension for renewal regional distribution."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "获客或创建来源 (acquisition or creation source). [enum] Valid values: 官网咨询, 行业峰会, 渠道伙伴, 客户转介绍, 内容营销. Analysis dimension inherited from upstream business entity."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "客户所属行业 (customer industry). Analysis dimension inherited from upstream business entity."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Renewal stage. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "续约金额 (renewal amount). [unit] CNY pre-tax demo amount. Do not aggregate across different document types."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "件数 (piece count / quantity). Number of units in the renewal."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "单价 (unit price). [unit] CNY price per unit."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: contract_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to contracts — the contract being renewed. Join key only."
+- name: owner_user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to crm_users — the renewal owner. Join key only."
+primary_key: renewal_id

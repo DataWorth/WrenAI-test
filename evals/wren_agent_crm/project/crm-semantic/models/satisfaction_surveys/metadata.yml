@@ -1,0 +1,84 @@
+name: satisfaction_surveys
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: satisfaction_surveys
+properties:
+  description: "满意度调查 (satisfaction surveys) — customer satisfaction (CSAT) survey responses tied to cases and accounts. Config/support table — region/source/industry fields are test fillers."
+columns:
+- name: satisfaction_survey_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "调查记录名称 (survey record name)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Test placeholder status. In this support table, status is not a business metric."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this support table, region is not a valid analysis dimension."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this support table, source is not a valid analysis dimension."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this support table, industry is not a valid analysis dimension."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: account_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to accounts — the surveyed customer. Join key only."
+- name: case_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to cases — the related service case. Join key only."
+primary_key: satisfaction_survey_id

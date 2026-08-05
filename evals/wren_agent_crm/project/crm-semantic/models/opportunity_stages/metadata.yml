@@ -1,0 +1,74 @@
+name: opportunity_stages
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: opportunity_stages
+properties:
+  description: "机会阶段字典 (opportunity stages) — reference/dimension table defining opportunity sales pipeline stages. Config table — not a business entity; region/source/industry fields are test fillers."
+columns:
+- name: opportunity_stage_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "阶段名称 (stage name, e.g. 需求确认, 方案报价, 赢单)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Test placeholder status. In this config table, status is not a business metric."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this config table, region is not a valid analysis dimension."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this config table, source is not a valid analysis dimension."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this config table, industry is not a valid analysis dimension."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+primary_key: opportunity_stage_id

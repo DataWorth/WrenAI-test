@@ -1,0 +1,74 @@
+name: lead_sources
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: lead_sources
+properties:
+  description: "线索来源字典 (lead sources) — reference/dimension table defining lead source types. Config table — not a business entity; region/source/industry fields are test fillers."
+columns:
+- name: lead_source_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "来源名称 (lead source name, e.g. 官网咨询, 行业峰会)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Test placeholder status. In this config table, status is not a business metric."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this config table, region is not a valid analysis dimension."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this config table, source is not a valid analysis dimension."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this config table, industry is not a valid analysis dimension."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+primary_key: lead_source_id

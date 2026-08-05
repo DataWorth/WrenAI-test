@@ -1,0 +1,119 @@
+name: crm_sales_funnel
+description: "CRM sales funnel metrics — pipeline and conversion metrics across leads, opportunities, orders, invoices, and payments."
+base_object: opportunities
+measures:
+  - name: lead_count
+    description: "线索数 (lead count) — total number of leads in the system."
+    type: count
+    sql: "*"
+    base_object: leads
+
+  - name: qualified_lead_count
+    description: "已合格线索数 (qualified leads) — leads with status = '已合格'."
+    type: count
+    sql: "*"
+    base_object: leads
+    filter: leads.status = '已合格'
+
+  - name: converted_lead_count
+    description: "已转化线索数 (converted leads) — leads with status = '已转化'."
+    type: count
+    sql: "*"
+    base_object: leads
+    filter: leads.status = '已转化'
+
+  - name: opportunity_count
+    description: "机会数 (opportunity count) — total number of sales opportunities."
+    type: count
+    sql: "*"
+
+  - name: in_progress_pipeline_amount
+    description: "进行中管道金额 (in-progress pipeline amount) — sum of opportunity amounts for active deals."
+    type: sum
+    sql: amount
+    filter: status = '进行中'
+
+  - name: won_amount
+    description: "赢单金额 (won amount) — sum of opportunity amounts for closed-won deals."
+    type: sum
+    sql: amount
+    filter: status = '赢单'
+
+  - name: lost_amount
+    description: "输单金额 (lost amount) — sum of opportunity amounts for closed-lost deals."
+    type: sum
+    sql: amount
+    filter: status = '输单'
+
+  - name: won_opportunity_count
+    description: "赢单机会数 (won opportunity count) — number of opportunities with status = '赢单'."
+    type: count
+    sql: "*"
+    filter: status = '赢单'
+
+  - name: lost_opportunity_count
+    description: "输单机会数 (lost opportunity count) — number of opportunities with status = '输单'."
+    type: count
+    sql: "*"
+    filter: status = '输单'
+
+  - name: win_rate
+    description: "赢单率 (win rate) — ratio of won opportunities to total closed opportunities (won + lost). Returns NULL if denominator is 0."
+    type: number
+    sql: "CASE WHEN (won_opportunity_count + lost_opportunity_count) = 0 THEN NULL ELSE won_opportunity_count * 1.0 / (won_opportunity_count + lost_opportunity_count) END"
+
+  - name: order_amount
+    description: "订单金额 (order amount) — sum of sales order amounts."
+    type: sum
+    sql: amount
+    base_object: sales_orders
+
+  - name: invoice_amount
+    description: "开票金额 (invoice amount) — sum of invoice amounts."
+    type: sum
+    sql: amount
+    base_object: invoices
+
+  - name: payment_amount
+    description: "回款金额 (payment amount) — sum of payment amounts received."
+    type: sum
+    sql: amount
+    base_object: payments
+
+dimensions:
+  - name: region
+    description: "销售大区 (sales region) — geographic sales territory."
+    type: varchar
+    sql: region
+
+  - name: source
+    description: "获客来源 (acquisition source) — how the lead or opportunity was acquired."
+    type: varchar
+    sql: source
+
+  - name: industry
+    description: "客户行业 (customer industry) — industry vertical of the customer."
+    type: varchar
+    sql: industry
+
+  - name: created_at
+    description: "创建时间 (creation timestamp) — when the record was created."
+    type: timestamp
+    sql: created_at
+    grain:
+      - day
+      - week
+      - month
+      - quarter
+      - year
+
+time_grain:
+  - day
+  - week
+  - month
+  - quarter
+  - year
+
+default_filters: []
+
+cached: false

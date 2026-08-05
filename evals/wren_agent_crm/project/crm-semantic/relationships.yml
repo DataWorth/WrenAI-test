@@ -1,0 +1,595 @@
+relationships:
+- name: account_addresses_accounts
+  models:
+  - account_addresses
+  - accounts
+  join_type: many_to_one
+  condition: account_addresses.account_id = accounts.account_id
+- name: account_status_history_accounts
+  models:
+  - account_status_history
+  - accounts
+  join_type: many_to_one
+  condition: account_status_history.account_id = accounts.account_id
+- name: account_status_history_crm_users
+  models:
+  - account_status_history
+  - crm_users
+  join_type: many_to_one
+  condition: account_status_history.changed_by_user_id = crm_users.user_id
+- name: account_tags_accounts
+  models:
+  - account_tags
+  - accounts
+  join_type: many_to_one
+  condition: account_tags.account_id = accounts.account_id
+- name: account_tags_tags
+  models:
+  - account_tags
+  - tags
+  join_type: many_to_one
+  condition: account_tags.tag_id = tags.tag_id
+- name: accounts_crm_users
+  models:
+  - accounts
+  - crm_users
+  join_type: many_to_one
+  condition: accounts.owner_user_id = crm_users.user_id
+- name: accounts_territories
+  models:
+  - accounts
+  - territories
+  join_type: many_to_one
+  condition: accounts.territory_id = territories.territory_id
+- name: activities_accounts
+  models:
+  - activities
+  - accounts
+  join_type: many_to_one
+  condition: activities.account_id = accounts.account_id
+- name: activities_contacts
+  models:
+  - activities
+  - contacts
+  join_type: many_to_one
+  condition: activities.contact_id = contacts.contact_id
+- name: activities_opportunities
+  models:
+  - activities
+  - opportunities
+  join_type: many_to_one
+  condition: activities.opportunity_id = opportunities.opportunity_id
+- name: activities_crm_users
+  models:
+  - activities
+  - crm_users
+  join_type: many_to_one
+  condition: activities.owner_user_id = crm_users.user_id
+- name: activity_participants_activities
+  models:
+  - activity_participants
+  - activities
+  join_type: many_to_one
+  condition: activity_participants.activity_id = activities.activity_id
+- name: activity_participants_crm_users
+  models:
+  - activity_participants
+  - crm_users
+  join_type: many_to_one
+  condition: activity_participants.user_id = crm_users.user_id
+- name: campaign_members_campaigns
+  models:
+  - campaign_members
+  - campaigns
+  join_type: many_to_one
+  condition: campaign_members.campaign_id = campaigns.campaign_id
+- name: campaign_members_leads
+  models:
+  - campaign_members
+  - leads
+  join_type: many_to_one
+  condition: campaign_members.lead_id = leads.lead_id
+- name: campaigns_crm_users
+  models:
+  - campaigns
+  - crm_users
+  join_type: many_to_one
+  condition: campaigns.owner_user_id = crm_users.user_id
+- name: case_comments_crm_users
+  models:
+  - case_comments
+  - crm_users
+  join_type: many_to_one
+  condition: case_comments.author_user_id = crm_users.user_id
+- name: case_comments_cases
+  models:
+  - case_comments
+  - cases
+  join_type: many_to_one
+  condition: case_comments.case_id = cases.case_id
+- name: case_status_history_cases
+  models:
+  - case_status_history
+  - cases
+  join_type: many_to_one
+  condition: case_status_history.case_id = cases.case_id
+- name: case_status_history_crm_users
+  models:
+  - case_status_history
+  - crm_users
+  join_type: many_to_one
+  condition: case_status_history.changed_by_user_id = crm_users.user_id
+- name: cases_accounts
+  models:
+  - cases
+  - accounts
+  join_type: many_to_one
+  condition: cases.account_id = accounts.account_id
+- name: cases_contacts
+  models:
+  - cases
+  - contacts
+  join_type: many_to_one
+  condition: cases.contact_id = contacts.contact_id
+- name: cases_crm_users
+  models:
+  - cases
+  - crm_users
+  join_type: many_to_one
+  condition: cases.owner_user_id = crm_users.user_id
+- name: contact_addresses_contacts
+  models:
+  - contact_addresses
+  - contacts
+  join_type: many_to_one
+  condition: contact_addresses.contact_id = contacts.contact_id
+- name: contact_tags_contacts
+  models:
+  - contact_tags
+  - contacts
+  join_type: many_to_one
+  condition: contact_tags.contact_id = contacts.contact_id
+- name: contact_tags_tags
+  models:
+  - contact_tags
+  - tags
+  join_type: many_to_one
+  condition: contact_tags.tag_id = tags.tag_id
+- name: contacts_accounts
+  models:
+  - contacts
+  - accounts
+  join_type: many_to_one
+  condition: contacts.account_id = accounts.account_id
+- name: contacts_crm_users
+  models:
+  - contacts
+  - crm_users
+  join_type: many_to_one
+  condition: contacts.owner_user_id = crm_users.user_id
+- name: contract_lines_contracts
+  models:
+  - contract_lines
+  - contracts
+  join_type: many_to_one
+  condition: contract_lines.contract_id = contracts.contract_id
+- name: contract_lines_products
+  models:
+  - contract_lines
+  - products
+  join_type: many_to_one
+  condition: contract_lines.product_id = products.product_id
+- name: contracts_accounts
+  models:
+  - contracts
+  - accounts
+  join_type: many_to_one
+  condition: contracts.account_id = accounts.account_id
+- name: contracts_opportunities
+  models:
+  - contracts
+  - opportunities
+  join_type: many_to_one
+  condition: contracts.opportunity_id = opportunities.opportunity_id
+- name: contracts_crm_users
+  models:
+  - contracts
+  - crm_users
+  join_type: many_to_one
+  condition: contracts.owner_user_id = crm_users.user_id
+- name: crm_users_teams
+  models:
+  - crm_users
+  - teams
+  join_type: many_to_one
+  condition: crm_users.team_id = teams.team_id
+- name: customer_health_scores_accounts
+  models:
+  - customer_health_scores
+  - accounts
+  join_type: many_to_one
+  condition: customer_health_scores.account_id = accounts.account_id
+- name: departments_organizations
+  models:
+  - departments
+  - organizations
+  join_type: many_to_one
+  condition: departments.organization_id = organizations.organization_id
+- name: email_events_email_messages
+  models:
+  - email_events
+  - email_messages
+  join_type: many_to_one
+  condition: email_events.email_message_id = email_messages.email_message_id
+- name: email_messages_accounts
+  models:
+  - email_messages
+  - accounts
+  join_type: many_to_one
+  condition: email_messages.account_id = accounts.account_id
+- name: email_messages_contacts
+  models:
+  - email_messages
+  - contacts
+  join_type: many_to_one
+  condition: email_messages.contact_id = contacts.contact_id
+- name: email_messages_opportunities
+  models:
+  - email_messages
+  - opportunities
+  join_type: many_to_one
+  condition: email_messages.opportunity_id = opportunities.opportunity_id
+- name: email_messages_crm_users
+  models:
+  - email_messages
+  - crm_users
+  join_type: many_to_one
+  condition: email_messages.owner_user_id = crm_users.user_id
+- name: invoice_lines_invoices
+  models:
+  - invoice_lines
+  - invoices
+  join_type: many_to_one
+  condition: invoice_lines.invoice_id = invoices.invoice_id
+- name: invoice_lines_products
+  models:
+  - invoice_lines
+  - products
+  join_type: many_to_one
+  condition: invoice_lines.product_id = products.product_id
+- name: invoices_accounts
+  models:
+  - invoices
+  - accounts
+  join_type: many_to_one
+  condition: invoices.account_id = accounts.account_id
+- name: invoices_contracts
+  models:
+  - invoices
+  - contracts
+  join_type: many_to_one
+  condition: invoices.contract_id = contracts.contract_id
+- name: knowledge_articles_crm_users
+  models:
+  - knowledge_articles
+  - crm_users
+  join_type: many_to_one
+  condition: knowledge_articles.owner_user_id = crm_users.user_id
+- name: lead_assignments_crm_users
+  models:
+  - lead_assignments
+  - crm_users
+  join_type: many_to_one
+  condition: lead_assignments.assigned_user_id = crm_users.user_id
+- name: lead_assignments_leads
+  models:
+  - lead_assignments
+  - leads
+  join_type: many_to_one
+  condition: lead_assignments.lead_id = leads.lead_id
+- name: lead_conversions_accounts
+  models:
+  - lead_conversions
+  - accounts
+  join_type: many_to_one
+  condition: lead_conversions.account_id = accounts.account_id
+- name: lead_conversions_contacts
+  models:
+  - lead_conversions
+  - contacts
+  join_type: many_to_one
+  condition: lead_conversions.contact_id = contacts.contact_id
+- name: lead_conversions_leads
+  models:
+  - lead_conversions
+  - leads
+  join_type: many_to_one
+  condition: lead_conversions.lead_id = leads.lead_id
+- name: lead_conversions_opportunities
+  models:
+  - lead_conversions
+  - opportunities
+  join_type: many_to_one
+  condition: lead_conversions.opportunity_id = opportunities.opportunity_id
+- name: leads_crm_users
+  models:
+  - leads
+  - crm_users
+  join_type: many_to_one
+  condition: leads.assigned_user_id = crm_users.user_id
+- name: leads_lead_sources
+  models:
+  - leads
+  - lead_sources
+  join_type: many_to_one
+  condition: leads.lead_source_id = lead_sources.lead_source_id
+- name: leads_lead_statuses
+  models:
+  - leads
+  - lead_statuses
+  join_type: many_to_one
+  condition: leads.lead_status_id = lead_statuses.lead_status_id
+- name: leads_nurture_sequences
+  models:
+  - leads
+  - nurture_sequences
+  join_type: many_to_one
+  condition: leads.nurture_sequence_id = nurture_sequences.nurture_sequence_id
+- name: meeting_attendees_contacts
+  models:
+  - meeting_attendees
+  - contacts
+  join_type: many_to_one
+  condition: meeting_attendees.contact_id = contacts.contact_id
+- name: meeting_attendees_meetings
+  models:
+  - meeting_attendees
+  - meetings
+  join_type: many_to_one
+  condition: meeting_attendees.meeting_id = meetings.meeting_id
+- name: meetings_accounts
+  models:
+  - meetings
+  - accounts
+  join_type: many_to_one
+  condition: meetings.account_id = accounts.account_id
+- name: meetings_opportunities
+  models:
+  - meetings
+  - opportunities
+  join_type: many_to_one
+  condition: meetings.opportunity_id = opportunities.opportunity_id
+- name: meetings_crm_users
+  models:
+  - meetings
+  - crm_users
+  join_type: many_to_one
+  condition: meetings.organizer_user_id = crm_users.user_id
+- name: notes_accounts
+  models:
+  - notes
+  - accounts
+  join_type: many_to_one
+  condition: notes.account_id = accounts.account_id
+- name: notes_crm_users
+  models:
+  - notes
+  - crm_users
+  join_type: many_to_one
+  condition: notes.author_user_id = crm_users.user_id
+- name: notes_contacts
+  models:
+  - notes
+  - contacts
+  join_type: many_to_one
+  condition: notes.contact_id = contacts.contact_id
+- name: notes_opportunities
+  models:
+  - notes
+  - opportunities
+  join_type: many_to_one
+  condition: notes.opportunity_id = opportunities.opportunity_id
+- name: opportunities_accounts
+  models:
+  - opportunities
+  - accounts
+  join_type: many_to_one
+  condition: opportunities.account_id = accounts.account_id
+- name: opportunities_leads
+  models:
+  - opportunities
+  - leads
+  join_type: many_to_one
+  condition: opportunities.lead_id = leads.lead_id
+- name: opportunities_opportunity_stages
+  models:
+  - opportunities
+  - opportunity_stages
+  join_type: many_to_one
+  condition: opportunities.opportunity_stage_id = opportunity_stages.opportunity_stage_id
+- name: opportunities_crm_users
+  models:
+  - opportunities
+  - crm_users
+  join_type: many_to_one
+  condition: opportunities.owner_user_id = crm_users.user_id
+- name: opportunity_contacts_contacts
+  models:
+  - opportunity_contacts
+  - contacts
+  join_type: many_to_one
+  condition: opportunity_contacts.contact_id = contacts.contact_id
+- name: opportunity_contacts_opportunities
+  models:
+  - opportunity_contacts
+  - opportunities
+  join_type: many_to_one
+  condition: opportunity_contacts.opportunity_id = opportunities.opportunity_id
+- name: opportunity_products_opportunities
+  models:
+  - opportunity_products
+  - opportunities
+  join_type: many_to_one
+  condition: opportunity_products.opportunity_id = opportunities.opportunity_id
+- name: opportunity_products_products
+  models:
+  - opportunity_products
+  - products
+  join_type: many_to_one
+  condition: opportunity_products.product_id = products.product_id
+- name: payments_invoices
+  models:
+  - payments
+  - invoices
+  join_type: many_to_one
+  condition: payments.invoice_id = invoices.invoice_id
+- name: price_book_items_price_books
+  models:
+  - price_book_items
+  - price_books
+  join_type: many_to_one
+  condition: price_book_items.price_book_id = price_books.price_book_id
+- name: price_book_items_products
+  models:
+  - price_book_items
+  - products
+  join_type: many_to_one
+  condition: price_book_items.product_id = products.product_id
+- name: products_product_categories
+  models:
+  - products
+  - product_categories
+  join_type: many_to_one
+  condition: products.product_category_id = product_categories.product_category_id
+- name: quote_items_products
+  models:
+  - quote_items
+  - products
+  join_type: many_to_one
+  condition: quote_items.product_id = products.product_id
+- name: quote_items_quotes
+  models:
+  - quote_items
+  - quotes
+  join_type: many_to_one
+  condition: quote_items.quote_id = quotes.quote_id
+- name: quotes_opportunities
+  models:
+  - quotes
+  - opportunities
+  join_type: many_to_one
+  condition: quotes.opportunity_id = opportunities.opportunity_id
+- name: quotes_crm_users
+  models:
+  - quotes
+  - crm_users
+  join_type: many_to_one
+  condition: quotes.owner_user_id = crm_users.user_id
+- name: quotes_price_books
+  models:
+  - quotes
+  - price_books
+  join_type: many_to_one
+  condition: quotes.price_book_id = price_books.price_book_id
+- name: renewals_contracts
+  models:
+  - renewals
+  - contracts
+  join_type: many_to_one
+  condition: renewals.contract_id = contracts.contract_id
+- name: renewals_crm_users
+  models:
+  - renewals
+  - crm_users
+  join_type: many_to_one
+  condition: renewals.owner_user_id = crm_users.user_id
+- name: sales_order_items_products
+  models:
+  - sales_order_items
+  - products
+  join_type: many_to_one
+  condition: sales_order_items.product_id = products.product_id
+- name: sales_order_items_sales_orders
+  models:
+  - sales_order_items
+  - sales_orders
+  join_type: many_to_one
+  condition: sales_order_items.sales_order_id = sales_orders.sales_order_id
+- name: sales_orders_accounts
+  models:
+  - sales_orders
+  - accounts
+  join_type: many_to_one
+  condition: sales_orders.account_id = accounts.account_id
+- name: sales_orders_opportunities
+  models:
+  - sales_orders
+  - opportunities
+  join_type: many_to_one
+  condition: sales_orders.opportunity_id = opportunities.opportunity_id
+- name: sales_orders_crm_users
+  models:
+  - sales_orders
+  - crm_users
+  join_type: many_to_one
+  condition: sales_orders.owner_user_id = crm_users.user_id
+- name: sales_orders_quotes
+  models:
+  - sales_orders
+  - quotes
+  join_type: many_to_one
+  condition: sales_orders.quote_id = quotes.quote_id
+- name: satisfaction_surveys_accounts
+  models:
+  - satisfaction_surveys
+  - accounts
+  join_type: many_to_one
+  condition: satisfaction_surveys.account_id = accounts.account_id
+- name: satisfaction_surveys_cases
+  models:
+  - satisfaction_surveys
+  - cases
+  join_type: many_to_one
+  condition: satisfaction_surveys.case_id = cases.case_id
+- name: tasks_accounts
+  models:
+  - tasks
+  - accounts
+  join_type: many_to_one
+  condition: tasks.account_id = accounts.account_id
+- name: tasks_opportunities
+  models:
+  - tasks
+  - opportunities
+  join_type: many_to_one
+  condition: tasks.opportunity_id = opportunities.opportunity_id
+- name: tasks_crm_users
+  models:
+  - tasks
+  - crm_users
+  join_type: many_to_one
+  condition: tasks.owner_user_id = crm_users.user_id
+- name: teams_departments
+  models:
+  - teams
+  - departments
+  join_type: many_to_one
+  condition: teams.department_id = departments.department_id
+- name: teams_territories
+  models:
+  - teams
+  - territories
+  join_type: many_to_one
+  condition: teams.territory_id = territories.territory_id
+- name: user_roles_roles
+  models:
+  - user_roles
+  - roles
+  join_type: many_to_one
+  condition: user_roles.role_id = roles.role_id
+- name: user_roles_crm_users
+  models:
+  - user_roles
+  - crm_users
+  join_type: many_to_one
+  condition: user_roles.user_id = crm_users.user_id

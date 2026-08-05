@@ -1,0 +1,89 @@
+name: quotes
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: quotes
+properties:
+  description: "报价单 (quotes) — pricing proposals sent to customers for products or services. CNY amount fields are business-relevant."
+columns:
+- name: quote_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier. Join key only."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "报价单名称 (quote name or title)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "Test placeholder status. Demo placeholder values — not interpreted as consistent business semantics."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this table, region is not a valid analysis dimension."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this table, source is not a valid analysis dimension."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this table, industry is not a valid analysis dimension."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "报价金额 (quote amount). [unit] CNY pre-tax demo amount. Do not aggregate across different document types."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "件数 (piece count / quantity). Number of units in the quote."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "单价 (unit price). [unit] CNY price per unit."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: opportunity_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to opportunities — the source opportunity. Join key only."
+- name: price_book_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to price_books — the price book used. Join key only."
+- name: owner_user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to crm_users — the quote owner. Join key only."
+primary_key: quote_id

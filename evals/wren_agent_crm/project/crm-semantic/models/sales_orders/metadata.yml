@@ -1,0 +1,94 @@
+name: sales_orders
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: sales_orders
+properties:
+  description: "已下单业绩 (sales orders) — confirmed customer orders representing booked revenue. Each sales order is tied to an opportunity and/or quote and tracks the committed deal value."
+columns:
+- name: sales_order_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier for the sales order record. Join key only, not a business document number."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "订单名称 (sales order name or title)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "订单状态 (order status). [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "销售大区 (sales region). [enum] Valid values: 华东, 华北, 华南, 华中, 西南. Analysis dimension for order regional distribution."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "获客或创建来源 (acquisition or creation source). [enum] Valid values: 官网咨询, 行业峰会, 渠道伙伴, 客户转介绍, 内容营销. Analysis dimension for order source tracking."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "客户所属行业 (customer industry). Analysis dimension for market segmentation."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Order stage. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "订单金额 (order amount). [unit] CNY pre-tax demo amount. Do not aggregate across different document types."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "件数 (piece count / quantity). Number of units or items in the order."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "单价 (unit price). [unit] CNY price per unit."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: account_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to accounts — the customer organization for this order. Join key only."
+- name: opportunity_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to opportunities — the source opportunity. Join key only."
+- name: quote_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to quotes — the source quote. Join key only."
+- name: owner_user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to crm_users — the order owner. Join key only."
+primary_key: sales_order_id

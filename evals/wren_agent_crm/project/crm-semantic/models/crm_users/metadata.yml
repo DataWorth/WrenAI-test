@@ -1,0 +1,79 @@
+name: crm_users
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: crm_users
+properties:
+  description: "CRM 系统用户 (CRM system users) — internal users of the CRM platform including sales reps, managers, and support agents. Not a business entity; dimension table for ownership and assignment."
+columns:
+- name: user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier for the CRM user. Join key only, not a business document number."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "用户名称 (user display name)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "User account status. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "Test placeholder region. In this config table, region is not a valid analysis dimension — only meaningful in business entities (accounts, leads, opportunities, orders, contracts, invoices, payments, renewals)."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder source. In this config table, source is not a valid analysis dimension — only meaningful in business entities."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder industry. In this config table, industry is not a valid analysis dimension — only meaningful in business entities."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Test placeholder stage. In this config table, stage is not a valid analysis dimension."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: team_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to teams — the team this user belongs to. Join key only."
+primary_key: user_id

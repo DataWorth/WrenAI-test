@@ -1,0 +1,89 @@
+name: cases
+table_reference:
+  catalog: ''
+  schema: crm_demo
+  table: cases
+properties:
+  description: "客户服务工单 (customer service cases) — support tickets and service requests from customers. Each case tracks an issue or inquiry raised by a contact against their account."
+columns:
+- name: case_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Primary key — unique identifier for the case record. Join key only, not a business document number."
+- name: record_name
+  type: VARCHAR(180)
+  not_null: true
+  properties:
+    description: "工单标题 (case title or subject)."
+- name: status
+  type: VARCHAR(40)
+  not_null: true
+  properties:
+    description: "工单状态 (case status). [enum] Valid values: 新建 (newly created), 处理中 (in progress), 待客户反馈 (awaiting customer response), 已关闭 (closed)."
+- name: region
+  type: VARCHAR(30)
+  not_null: true
+  properties:
+    description: "销售大区 (sales region). [enum] Valid values: 华东, 华北, 华南, 华中, 西南. Analysis dimension for service regional distribution."
+- name: source
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "获客或创建来源 (acquisition or creation source). [enum] Valid values: 官网咨询, 行业峰会, 渠道伙伴, 客户转介绍, 内容营销. Analysis dimension for case source tracking."
+- name: industry
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "客户所属行业 (customer industry). Analysis dimension for market segmentation."
+- name: stage
+  type: VARCHAR(60)
+  not_null: true
+  properties:
+    description: "Case stage. [enum] Demo placeholder values — not interpreted as consistent business semantics."
+- name: amount
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder amount. [unit] Not a CNY business amount in this table — do not use for revenue metrics."
+- name: probability
+  type: DECIMAL(6, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder probability. Not the win probability — only opportunities.probability has business meaning."
+- name: quantity
+  type: INT
+  not_null: true
+  properties:
+    description: "Test placeholder quantity."
+- name: unit_price
+  type: DECIMAL(18, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder unit price."
+- name: score
+  type: DECIMAL(8, 2)
+  not_null: true
+  properties:
+    description: "Test placeholder score. Not the customer health score — only customer_health_scores.score has business meaning."
+- name: created_at
+  type: DATETIME
+  not_null: true
+  properties:
+    description: "Record creation timestamp. [time] Business timezone: Asia/Shanghai (UTC+8)."
+- name: account_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to accounts — the customer organization that raised the case. Join key only."
+- name: contact_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to contacts — the contact person who raised the case. Join key only."
+- name: owner_user_id
+  type: BIGINT
+  not_null: true
+  properties:
+    description: "Foreign key to crm_users — the case owner/agent. Join key only."
+primary_key: case_id

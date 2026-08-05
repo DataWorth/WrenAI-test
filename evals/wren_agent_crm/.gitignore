@@ -1,0 +1,12 @@
+runtime/bailian.env
+runtime/mysql-root.env
+runtime/agent-empty.env
+runtime/wren-home/profiles.yml
+runtime/crm-seed.sql
+project/.env
+project/connection.yml
+project/**/target/
+logs/
+results/
+**/__pycache__/
+**/*.pyc
