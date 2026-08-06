@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT=/opt/wren-agent-eval
-PROJECT="$ROOT/project"
+PROJECT="${WREN_EVAL_PROJECT:-$ROOT/project/crm-semantic}"
 RUNTIME="$ROOT/runtime"
 BAILIAN="$RUNTIME/bailian.env"
 NETWORK=wren-eval-net
