@@ -21,6 +21,7 @@ const userRequest = process.env.WRENAI_TEST_USER_REQUEST
   || "请为当前连接的 CRM 数据库搭建 MDL。";
 const prompt = [
   "Use the /wren skill for this request.",
+  "Before doing any other work, run `wren skills get generate-mdl` and follow the returned official guide.",
   userRequest,
 ].join("\n\n");
 

@@ -22,6 +22,7 @@ const userRequest = process.env.WRENAI_TEST_USER_REQUEST
 
 const prompt = [
   "Use the /wren skill for this request.",
+  "Before doing any other work, run `wren skills get enrich-context` and follow the returned official guide.",
   userRequest,
 ].join("\n\n");
 
