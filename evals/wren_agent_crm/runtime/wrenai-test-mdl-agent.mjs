@@ -22,6 +22,7 @@ const userRequest = process.env.WRENAI_TEST_USER_REQUEST
 const prompt = [
   "Use the /wren skill for this request.",
   "Before doing any other work, run `wren skills get generate-mdl` and follow the returned official guide.",
+  "Follow every user-confirmation gate in the guide. Do not add model or column descriptions, inferred relationships, knowledge rules, NL-to-SQL examples, calculated columns, views, or cubes unless the user explicitly approves them through AskUserQuestion.",
   userRequest,
 ].join("\n\n");
 
