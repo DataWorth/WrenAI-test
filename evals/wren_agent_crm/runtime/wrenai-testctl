@@ -8,11 +8,9 @@ RESULTS="$ROOT/results"
 RUNS="$ROOT/runs"
 NETWORK=wrenai-test-net
 MYSQL_CONTAINER=wrenai-test-mysql
-EXECUTOR_CONTAINER=wrenai-test-executor
 MCP_CONTAINER=wrenai-test-mcp
 CLI_IMAGE=wrenai-test-cli:74bf59e1-relfix1
-EXECUTOR_IMAGE=wrenai-test-executor:74bf59e1
-AGENT_IMAGE=wrenai-test-agent:human-v1
+AGENT_IMAGE=${WRENAI_TEST_AGENT_IMAGE:-wrenai-test-agent:official-baseline-v1}
 WREN_HOME="$RUNTIME/wren-home"
 
 usage() {
@@ -30,18 +28,6 @@ require_project() {
   esac
 }
 
-start_executor() {
-  project=$1
-  docker rm -f "$EXECUTOR_CONTAINER" >/dev/null 2>&1 || true
-  docker run -d --name "$EXECUTOR_CONTAINER" \
-    --network "$NETWORK" \
-    --env-file "$CANONICAL_PROJECT/.env" \
-    -e WREN_HOME=/wren-home \
-    -v "$project:/workspace:rw" \
-    -v "$WREN_HOME:/wren-home:ro" \
-    "$EXECUTOR_IMAGE" >/dev/null
-}
-
 preflight() {
   test -d "$CANONICAL_PROJECT/models"
   test -s "$CANONICAL_PROJECT/.env"
@@ -49,8 +35,8 @@ preflight() {
   test -s "$WREN_HOME/profiles.yml"
   docker network inspect "$NETWORK" >/dev/null
   docker image inspect "$CLI_IMAGE" >/dev/null
-  docker image inspect "$EXECUTOR_IMAGE" >/dev/null
   docker image inspect "$AGENT_IMAGE" >/dev/null
+  ! docker ps --format '{{.Names}}' | grep -qx 'wrenai-test-executor'
   test "$(docker inspect -f '{{.State.Status}}' "$MYSQL_CONTAINER")" = running
   table_count=$(docker exec "$MYSQL_CONTAINER" sh -lc \
     'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysql -N -B -uroot -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=\"crm_demo\" AND table_type=\"BASE TABLE\";"')
@@ -73,15 +59,18 @@ new_run() {
 generate() {
   project=$1
   require_project "$project"
-  start_executor "$project"
   run_id=$(basename "$(dirname "$project")")
   result_dir="$RESULTS/$run_id"
   mkdir -p "$result_dir"
-  docker run --rm --network "$NETWORK" \
+  docker rm -f wrenai-test-mdl-agent >/dev/null 2>&1 || true
+  docker run --rm -i --name wrenai-test-mdl-agent \
+    --network "$NETWORK" \
     --env-file "$RUNTIME/bailian.env" \
     --env-file "$CANONICAL_PROJECT/.env" \
     -e WRENAI_TEST_USER_REQUEST="${WRENAI_TEST_USER_REQUEST:-请为当前连接的 CRM 数据库搭建 MDL。}" \
+    -e WRENAI_TEST_TRANSCRIPT=/results/generate-mdl-transcript.jsonl \
     -v "$project:/workspace:rw" \
+    -v "$result_dir:/results:rw" \
     "$AGENT_IMAGE" /app/wrenai-test-mdl-agent.mjs \
     2>&1 | tee "$result_dir/generate-mdl.log"
 }
@@ -89,7 +78,6 @@ generate() {
 enrich() {
   project=$1
   require_project "$project"
-  start_executor "$project"
   run_id=$(basename "$(dirname "$project")")
   result_dir="$RESULTS/$run_id"
   mkdir -p "$result_dir"

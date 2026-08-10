@@ -36,15 +36,16 @@ relationships:
 服务器 `/opt/wrenai-test/runtime` 中使用的源文件来自 `evals/wren_agent_crm/runtime`，当前活动入口包括：
 
 - `wrenai-test-mdl-agent.mjs`：用一句简短用户请求驱动官方 `generate-mdl`；
-- `wrenai-test-human-agent.mjs`：现场逐题询问测试操作者，不包含写死业务答案；
+- `wrenai-test-human-agent.mjs`：通过 Claude Agent SDK 内置 `AskUserQuestion` 现场逐题询问测试操作者，不包含写死业务答案；
+- `wrenai-test-user-input.mjs`：把 `AskUserQuestion` 映射到终端真人输入并记录 JSONL；
 - `wrenai-testctl`：创建 run-specific 项目并控制 generate、enrich、validate、build 和 MCP；
-- Wren MCP/执行器调用封装；
+- 构建完成后使用的 Wren MCP 控制入口；
 - 100 题 Chat BI 批量运行与评分脚本；
 - CRM 数据库初始化脚本；
-- CLI、执行器及 Agent 镜像 Dockerfile；
+- CLI 及 Agent 镜像 Dockerfile；
 - 旧 `official-agent.mjs`、`grill-agent.mjs` 和 `agentctl` 只作为历史评测代码，不再是服务器活动入口。
 
-百炼通过 Anthropic 兼容环境变量接入。模型名称和访问凭据均由服务器环境文件提供，代码中不保存 API Key。
+百炼通过 Anthropic 兼容环境变量接入。模型名称和访问凭据均由服务器环境文件提供，代码中不保存 API Key。Claude Agent SDK 版本由 `package-lock.json` 固定，Agent 镜像使用 `npm ci` 安装依赖。
 
 ## CRM 测试资产
 
@@ -70,9 +71,9 @@ relationships:
 - Wren 包：`core/wren`
 - Wren 官方 Skill：`skills/wren/SKILL.md`
 - generate-mdl Skill：`core/wren/src/wren/skills_content/generate-mdl/SKILL.md`
-- Agent 与执行器文件：`evals/wren_agent_crm/runtime/*`
+- Agent 文件：`evals/wren_agent_crm/runtime/wrenai-test-*.mjs`
 
-活动Agent镜像使用 `Dockerfile.wrenai-test-agent`，镜像、网络和容器统一使用 `wrenai-test` 前缀。
+活动 Agent 镜像使用 `Dockerfile.wrenai-test-agent`。MDL 搭建阶段由 Claude Agent SDK 直接挂载 Wren Skill、Bash、Read、Write、Edit、Glob、Grep 和 `AskUserQuestion`；不启动语义 Executor，也不挂载自定义建模 MCP。Wren MCP 只在 `target/mdl.json` 构建成功后用于查询。
 
 ## 密钥与服务器配置
 

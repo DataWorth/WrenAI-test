@@ -120,8 +120,7 @@ test -s "$WRENAI_TEST_ROOT/runtime/bailian.env"
 test -s "$WRENAI_TEST_ROOT/runtime/wren-home/profiles.yml"
 docker network inspect wrenai-test-net >/dev/null
 docker image inspect wrenai-test-cli:74bf59e1-relfix1 >/dev/null
-docker image inspect wrenai-test-executor:74bf59e1 >/dev/null
-docker image inspect wrenai-test-agent:human-v1 >/dev/null
+docker image inspect wrenai-test-agent:official-baseline-v1 >/dev/null
 ```
 
 ## MDL structure validation and build
@@ -158,7 +157,7 @@ Acceptance requires a zero exit status, a parseable manifest, 8 expected models,
 
 ### Recommended generate-mdl path
 
-Use `runtime/wrenai-test-mdl-agent.mjs` for the official discovery flow. It accepts the short user request `请为当前连接的 CRM 数据库搭建 MDL。`, invokes the `/wren` Skill, obtains the current `generate-mdl` guide from the installed CLI, and uses the semantic executor. Its current cap is 260 SDK turns.
+Use `runtime/wrenai-test-mdl-agent.mjs` for the official discovery flow. It accepts the short user request `请为当前连接的 CRM 数据库搭建 MDL。`, invokes the `/wren` Skill, obtains the current `generate-mdl` guide from the installed CLI, and lets the Agent use its built-in file and Bash tools plus SQLAlchemy for database discovery. It has no modeling Executor or custom modeling MCP. Its current cap is 260 SDK turns.
 
 Semantic construction writes project files. Never run it against the canonical project. Create a run-specific workspace with `wrenai-testctl new-run` and retain the full log and project under the reported run ID.
 
@@ -172,7 +171,7 @@ The canonical project remains blank and is only copied into run-specific workspa
 
 ### Recommended enrich-context Grill path
 
-Use `runtime/wrenai-test-human-agent.mjs` when the test operator will answer business questions live. It loads the official `enrich-context` guide, asks exactly one question at a time through an interactive business-owner MCP tool, blocks for terminal input, and writes a complete JSONL transcript. It contains no hard-coded CRM business baseline. Its current cap is 420 SDK turns.
+Use `runtime/wrenai-test-human-agent.mjs` when the test operator will answer business questions live. It loads the official `enrich-context` guide, asks exactly one question at a time through Claude Agent SDK's built-in `AskUserQuestion`, blocks for terminal input, and writes a complete JSONL transcript. It contains no hard-coded CRM business baseline. Its current cap is 420 SDK turns.
 
 The Grill run is successful only if:
 
@@ -188,7 +187,7 @@ Start the live Grill only on the same run-specific project after `generate` succ
 /opt/wrenai-test/runtime/wrenai-testctl enrich "$RUN_PROJECT"
 ```
 
-The operator reads each question and enters one answer or `/skip`. Starting it recreates only the named `wrenai-test-executor` and ephemeral `wrenai-test-human-agent`; get explicit confirmation before doing so.
+The operator reads each question and enters one answer or `/skip`. Starting it creates only the ephemeral `wrenai-test-human-agent`; get explicit confirmation before doing so.
 
 The previous `official-agent.mjs`, hard-coded `grill-agent.mjs`, and `agentctl` are legacy evaluation artifacts. They are not active `wrenai-test` entrypoints and must not be used for current acceptance.
 

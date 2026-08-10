@@ -1,1 +1,1 @@
-{"type":"module","dependencies":{"@anthropic-ai/claude-agent-sdk":"latest","zod":"^4.0.0"}}
+{"type":"module","dependencies":{"@anthropic-ai/claude-agent-sdk":"0.3.226","zod":"^4.0.0"}}

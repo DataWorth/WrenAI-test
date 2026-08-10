@@ -29,7 +29,7 @@ Canonical 项目保持 0 模型、0 Cube、无 `target/mdl.json`。每次测试�
 请用 Grill 模式补充当前 CRM 项目的业务语义，每次只问一个问题。
 ```
 
-`wrenai-test-human-agent.mjs` 会逐题等待测试操作者输入。它没有预置 CRM 业务答案；每次问题、拟稿、回答和写入位置记录在本次运行的 `human-grill-transcript.jsonl` 中。
+`generate` 和 `enrich` 都使用 Claude Agent SDK 内置 `AskUserQuestion` 等待测试操作者输入。它们不预置 CRM 业务答案；基础建模问答记录在 `generate-mdl-transcript.jsonl`，业务语义问答记录在 `human-grill-transcript.jsonl`。
 
 ## 运行方式
 
@@ -45,6 +45,8 @@ $WRENAI_TEST_ROOT/runtime/wrenai-testctl start-mcp "$RUN_PROJECT"
 ```
 
 `generate` 应只根据数据库真实元数据生成 8 个模型和现有外键关系，不应自行创建业务指标或 Cube。业务描述、枚举、金额单位、时间口径、默认过滤和 Cube 必须在 `enrich` 阶段逐项确认。
+
+MDL 搭建阶段不启动语义 Executor。Agent 直接使用 Wren Skill、Wren CLI、文件工具和 SQLAlchemy；构建后的 Wren MCP 仅用于查询和验证。
 
 ## 连接边界
 
