@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=/opt/wrenai-test
+CANONICAL_PROJECT="$ROOT/project"
+RUNTIME="$ROOT/runtime"
+RESULTS="$ROOT/results"
+RUNS="$ROOT/runs"
+NETWORK=wrenai-test-net
+MYSQL_CONTAINER=wrenai-test-mysql
+EXECUTOR_CONTAINER=wrenai-test-executor
+MCP_CONTAINER=wrenai-test-mcp
+CLI_IMAGE=wrenai-test-cli:74bf59e1-relfix1
+EXECUTOR_IMAGE=wrenai-test-executor:74bf59e1
+AGENT_IMAGE=wrenai-test-agent:human-v1
+WREN_HOME="$RUNTIME/wren-home"
+
+usage() {
+  echo "usage: wrenai-testctl preflight | new-run | generate <project> | enrich <project> | validate <project> | build <project> | start-mcp <project> | status"
+}
+
+require_project() {
+  project=${1:-}
+  test -n "$project"
+  test -d "$project/models"
+  test -f "$project/wren_project.yml"
+  case "$project" in
+    "$ROOT"/runs/*/project) ;;
+    *) echo "project must be a run-specific project under $RUNS" >&2; exit 2 ;;
+  esac
+}
+
+start_executor() {
+  project=$1
+  docker rm -f "$EXECUTOR_CONTAINER" >/dev/null 2>&1 || true
+  docker run -d --name "$EXECUTOR_CONTAINER" \
+    --network "$NETWORK" \
+    --env-file "$CANONICAL_PROJECT/.env" \
+    -e WREN_HOME=/wren-home \
+    -v "$project:/workspace:rw" \
+    -v "$WREN_HOME:/wren-home:ro" \
+    "$EXECUTOR_IMAGE" >/dev/null
+}
+
+preflight() {
+  test -d "$CANONICAL_PROJECT/models"
+  test -s "$CANONICAL_PROJECT/.env"
+  test -s "$RUNTIME/bailian.env"
+  test -s "$WREN_HOME/profiles.yml"
+  docker network inspect "$NETWORK" >/dev/null
+  docker image inspect "$CLI_IMAGE" >/dev/null
+  docker image inspect "$EXECUTOR_IMAGE" >/dev/null
+  docker image inspect "$AGENT_IMAGE" >/dev/null
+  test "$(docker inspect -f '{{.State.Status}}' "$MYSQL_CONTAINER")" = running
+  table_count=$(docker exec "$MYSQL_CONTAINER" sh -lc \
+    'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysql -N -B -uroot -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=\"crm_demo\" AND table_type=\"BASE TABLE\";"')
+  test "$table_count" = 8
+  echo "preflight_ok"
+}
+
+new_run() {
+  run_id=$(date -u +%Y%m%dT%H%M%SZ)
+  run_root="$RUNS/$run_id"
+  run_project="$run_root/project"
+  result_dir="$RESULTS/$run_id"
+  test ! -e "$run_root"
+  mkdir -p "$run_root" "$result_dir"
+  cp -a "$CANONICAL_PROJECT" "$run_project"
+  chown -R 10001:10001 "$run_root" "$result_dir"
+  echo "$run_project"
+}
+
+generate() {
+  project=$1
+  require_project "$project"
+  start_executor "$project"
+  run_id=$(basename "$(dirname "$project")")
+  result_dir="$RESULTS/$run_id"
+  mkdir -p "$result_dir"
+  docker run --rm --network "$NETWORK" \
+    --env-file "$RUNTIME/bailian.env" \
+    --env-file "$CANONICAL_PROJECT/.env" \
+    -e WRENAI_TEST_USER_REQUEST="${WRENAI_TEST_USER_REQUEST:-请为当前连接的 CRM 数据库搭建 MDL。}" \
+    -v "$project:/workspace:rw" \
+    "$AGENT_IMAGE" /app/wrenai-test-mdl-agent.mjs \
+    2>&1 | tee "$result_dir/generate-mdl.log"
+}
+
+enrich() {
+  project=$1
+  require_project "$project"
+  start_executor "$project"
+  run_id=$(basename "$(dirname "$project")")
+  result_dir="$RESULTS/$run_id"
+  mkdir -p "$result_dir"
+  docker rm -f wrenai-test-human-agent >/dev/null 2>&1 || true
+  docker run --rm -i --name wrenai-test-human-agent \
+    --network "$NETWORK" \
+    --env-file "$RUNTIME/bailian.env" \
+    --env-file "$CANONICAL_PROJECT/.env" \
+    -e WRENAI_TEST_USER_REQUEST="${WRENAI_TEST_USER_REQUEST:-请用 Grill 模式补充当前 CRM 项目的业务语义，每次只问一个问题。}" \
+    -e WRENAI_TEST_TRANSCRIPT=/results/human-grill-transcript.jsonl \
+    -v "$project:/workspace:rw" \
+    -v "$result_dir:/results:rw" \
+    "$AGENT_IMAGE" /app/wrenai-test-human-agent.mjs \
+    2>&1 | tee "$result_dir/enrich-context.log"
+}
+
+run_context_command() {
+  command=$1
+  project=$2
+  require_project "$project"
+  docker run --rm --network "$NETWORK" \
+    --env-file "$CANONICAL_PROJECT/.env" \
+    -e WREN_HOME=/wren-home \
+    -v "$project:/workspace:rw" \
+    -v "$WREN_HOME:/wren-home:ro" \
+    -w /workspace \
+    "$CLI_IMAGE" context "$command"
+}
+
+start_mcp() {
+  project=$1
+  require_project "$project"
+  test -s "$project/target/mdl.json"
+  docker rm -f "$MCP_CONTAINER" >/dev/null 2>&1 || true
+  docker run -d --name "$MCP_CONTAINER" \
+    --network "$NETWORK" \
+    --env-file "$CANONICAL_PROJECT/.env" \
+    -e WREN_HOME=/wren-home \
+    -v "$project:/workspace:ro" \
+    -v "$WREN_HOME:/wren-home:ro" \
+    "$CLI_IMAGE" serve mcp --transport http --host 0.0.0.0 --port 8080 \
+    --project /workspace --profile wrenai-test-mysql --quiet >/dev/null
+  echo "mcp_started"
+}
+
+status() {
+  docker ps -a --format '{{.Names}}|{{.Image}}|{{.Status}}' | awk -F'|' '$1 ~ /^wrenai-test-/ {print}' | sort
+}
+
+command=${1:-}
+case "$command" in
+  preflight) preflight ;;
+  new-run) new_run ;;
+  generate) require_project "${2:-}"; generate "$2" ;;
+  enrich) require_project "${2:-}"; enrich "$2" ;;
+  validate) run_context_command validate "${2:-}" ;;
+  build) run_context_command build "${2:-}" ;;
+  start-mcp) start_mcp "${2:-}" ;;
+  status) status ;;
+  *) usage; exit 2 ;;
+esac

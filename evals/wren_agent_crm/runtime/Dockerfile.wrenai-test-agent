@@ -1,0 +1,17 @@
+ARG WRENAI_TEST_CLI_IMAGE=wrenai-test-cli:74bf59e1-relfix1
+FROM ${WRENAI_TEST_CLI_IMAGE}
+
+COPY --from=node:22-bookworm-slim /usr/local /usr/local
+RUN python3 -m pip install --no-cache-dir "SQLAlchemy>=2,<3"
+WORKDIR /app
+COPY evals/wren_agent_crm/runtime/package.json ./
+RUN npm config set registry https://registry.npmmirror.com \
+    && npm install --omit=dev \
+    && npm cache clean --force
+RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin agent
+COPY --chown=agent:agent evals/wren_agent_crm/runtime/wrenai-test-mdl-agent.mjs ./
+COPY --chown=agent:agent evals/wren_agent_crm/runtime/wrenai-test-human-agent.mjs ./
+RUN mkdir -p /home/agent/.claude/skills/wren && chown -R agent:agent /home/agent/.claude
+COPY --chown=agent:agent skills/wren/SKILL.md /home/agent/.claude/skills/wren/SKILL.md
+USER agent
+ENTRYPOINT ["node"]

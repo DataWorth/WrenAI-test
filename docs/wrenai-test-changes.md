@@ -7,9 +7,9 @@
 - 服务器基线分支：`codex/22-test-environment`
 - 服务器源码基线：`74bf59e1d8400988f5269048cdeed983e77dc20d`
 - 测试服务器：`117.72.76.22`
-- 服务器项目根目录：`/opt/wren-agent-eval`
+- 服务器项目根目录：`/opt/wrenai-test`
 
-`/opt/wren-agent-eval` 是 `WrenAI-test` 的远程测试环境。本仓库首次同步以服务器现状为来源，没有迁移、清空或重建服务器项目。后续修改先在本仓库完成并提交，再同步到服务器原目录进行运行验证。
+`/opt/wrenai-test` 是 `WrenAI-test` 的远程测试环境。活动容器、网络、镜像和控制入口统一使用 `wrenai-test` 前缀；后续修改先在本仓库完成并提交，再同步到服务器进行运行验证。
 
 ## Wren 源码改动
 
@@ -33,15 +33,16 @@ relationships:
 
 ## Agent 与评测代码
 
-服务器 `/opt/wren-agent-eval/runtime` 中的源文件同步至 `evals/wren_agent_crm/runtime`，包括：
+服务器 `/opt/wrenai-test/runtime` 中使用的源文件来自 `evals/wren_agent_crm/runtime`，当前活动入口包括：
 
-- 基于 `@anthropic-ai/claude-agent-sdk` 的语义 Agent、Chat BI Agent 和 grill 交互 Agent；
-- 官方 Wren Skill 驱动入口与早期的独立 `generate-mdl` Agent 入口；
+- `wrenai-test-mdl-agent.mjs`：用一句简短用户请求驱动官方 `generate-mdl`；
+- `wrenai-test-human-agent.mjs`：现场逐题询问测试操作者，不包含写死业务答案；
+- `wrenai-testctl`：创建 run-specific 项目并控制 generate、enrich、validate、build 和 MCP；
 - Wren MCP/执行器调用封装；
 - 100 题 Chat BI 批量运行与评分脚本；
 - CRM 数据库初始化脚本；
 - CLI、执行器及 Agent 镜像 Dockerfile；
-- 服务器控制入口 `agentctl`。
+- 旧 `official-agent.mjs`、`grill-agent.mjs` 和 `agentctl` 只作为历史评测代码，不再是服务器活动入口。
 
 百炼通过 Anthropic 兼容环境变量接入。模型名称和访问凭据均由服务器环境文件提供，代码中不保存 API Key。
 
@@ -51,27 +52,27 @@ relationships:
 
 | 资产 | 数量或位置 |
 |---|---|
-| CRM 模型 | 55 个 `models/*/metadata.yml` |
-| 模型关系 | 99 条，位于 `project/crm-semantic/relationships.yml` |
-| Cube | 1 个 `crm_sales_funnel` |
+| CRM 数据表 | 8 张核心表 |
+| Canonical MDL | 空项目，0 个模型、0 个 Cube、无构建产物 |
+| 每次测试项目 | `/opt/wrenai-test/runs/<run-id>/project` |
 | View | 0 个 |
 | Chat BI 基准 | 100 题，位于 `benchmarks/crm_100_qna.jsonl` |
 | CRM mock 数据生成器 | `runtime/bootstrap_crm.py` |
 
 `target/mdl.json`、运行日志、评分结果和生成后的 `crm-seed.sql` 不纳入 Git。数据库可由 `bootstrap_crm.py` 重新生成。
 
-当前 Cube 是语义 Agent 的测试产物，尚未通过可用性验收，不能作为已验证能力；后续应在 22 服务器完成 `wren context validate`、`wren context build` 和实际查询验证。
+旧55模型、99关系和Cube已从活动项目移除并单独备份。新的MDL、业务语义和Cube必须由每次run-specific测试重新生成并通过 `validate`、`build` 和实际查询验证。
 
 ## 目录适配
 
-服务器原 Dockerfile 以 `/opt/wren-agent-eval/source` 和 `/opt/wren-agent-eval/runtime` 为独立构建上下文。本仓库归档后统一以仓库根目录为 Docker build context，因此 Dockerfile 的 `COPY` 路径调整为：
+服务器 Dockerfile 统一以仓库根目录为 Docker build context，因此 Dockerfile 的 `COPY` 路径为：
 
 - Wren 包：`core/wren`
 - Wren 官方 Skill：`skills/wren/SKILL.md`
 - generate-mdl Skill：`core/wren/src/wren/skills_content/generate-mdl/SKILL.md`
 - Agent 与执行器文件：`evals/wren_agent_crm/runtime/*`
 
-除这些目录适配外，服务器回收的 Agent 和评测逻辑保持原样。
+活动Agent镜像使用 `Dockerfile.wrenai-test-agent`，镜像、网络和容器统一使用 `wrenai-test` 前缀。
 
 ## 密钥与服务器配置
 
@@ -89,7 +90,7 @@ Git 只保存以下模板：
 
 1. 在本机 `/Users/0scar/project/WrenAI-test` 修改代码。
 2. 完成静态检查并提交到 `codex/22-test-environment` 或其后续功能分支。
-3. 将已确认的变更同步到 22 服务器原有 `/opt/wren-agent-eval` 对应目录。
+3. 将已确认的变更同步到 22 服务器 `/opt/wrenai-test` 对应目录。
 4. 镜像构建、服务启动、语义 Agent、Chat BI 和基准测试只在 22 服务器运行。
 5. 记录代码提交、镜像标签、模型名称、测试结果目录和已知问题。
 
