@@ -1,4 +1,4 @@
-FROM wren-eval-cli:74bf59e1
+FROM wrenai-test-cli:74bf59e1-relfix1
 USER root
 RUN python3 -m pip install --no-cache-dir "mcp>=1.26,<2" "PyMySQL>=1.1,<2"
 COPY evals/wren_agent_crm/runtime/semantic_executor.py /app/semantic_executor.py

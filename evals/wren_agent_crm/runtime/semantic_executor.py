@@ -8,7 +8,7 @@ import pymysql
 from mcp.server.fastmcp import FastMCP
 
 PROJECT = Path("/workspace").resolve()
-mcp = FastMCP("wren-eval-semantic")
+mcp = FastMCP("wrenai-test-semantic")
 
 
 def fail(message):
