@@ -121,10 +121,11 @@ def main():
         ])
         for category, item in benchmark.get("categories", {}).items():
             lines.append(f"| {category} | {item['total']} | {item['sql_runnable']} | {item['answer_exact']} | {item['value_set_match']} |")
-        lines.extend(["", "### 每题结果", "", "| ID | 类别 | 问题 | SQL可运行 | 精确答案 | 值集合匹配 | 错误 |", "|---:|---|---|:---:|:---:|:---:|---|"])
+        lines.extend(["", "### 每题结果", "", "| ID | 类别 | 问题 | 候选SQL | SQL可运行 | 精确答案 | 值集合匹配 | 错误 |", "|---:|---|---|---|:---:|:---:|:---:|---|"])
         for item in benchmark.get("items", []):
             lines.append(
                 f"| {item['id']} | {markdown_cell(item['category'])} | {markdown_cell(item['question'])} | "
+                f"`{markdown_cell(item.get('candidate_sql'))}` | "
                 f"{'是' if item['sql_runnable'] else '否'} | {'是' if item['answer_exact'] else '否'} | "
                 f"{'是' if item['value_set_match'] else '否'} | {markdown_cell(item.get('execution_error') or item.get('agent_error'))} |"
             )
