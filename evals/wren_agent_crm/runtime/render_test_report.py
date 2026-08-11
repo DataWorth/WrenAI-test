@@ -57,6 +57,7 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--source-commit", required=True)
+    parser.add_argument("--wren-source-commit", required=True)
     parser.add_argument("--image", required=True)
     parser.add_argument("--model", required=True)
     args = parser.parse_args()
@@ -77,7 +78,8 @@ def main():
         "## 执行范围",
         "",
         f"- Run ID：`{args.run_id}`",
-        f"- Wren 源码提交：`{args.source_commit}`",
+        f"- 测试运行脚本提交：`{args.source_commit}`",
+        f"- Wren 源码基线：`{args.wren_source_commit}`",
         f"- Agent 镜像：`{args.image}`",
         f"- Chat BI 模型：`{args.model}`",
         "- 数据范围：CRM 30张核心表、46条内部外键；历史55表测试集未参与本次运行。",
