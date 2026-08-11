@@ -218,6 +218,7 @@ chatbi_container() {
   result_dir=$2
   identifier=$3
   name=$4
+  max_turns=${5:-16}
   require_project "$project"
   test "$(docker inspect -f '{{.State.Status}}' "$MCP_CONTAINER")" = running
   docker rm -f "$name" >/dev/null 2>&1 || true
@@ -225,6 +226,7 @@ chatbi_container() {
     --network "container:$MCP_CONTAINER" \
     --env-file "$RUNTIME/bailian.env" \
     -e WRENAI_TEST_BENCHMARK="/benchmarks/$BENCHMARK_NAME" \
+    -e WRENAI_TEST_MAX_TURNS="$max_turns" \
     -v "$BENCHMARK_FILE:/benchmarks/$BENCHMARK_NAME:ro" \
     -v "$project:/workspace:ro" \
     -v "$result_dir:/results:rw" \
@@ -238,7 +240,7 @@ chatbi_smoke() {
   result_dir="$RESULTS/$run_id/chatbi-smoke"
   mkdir -p "$result_dir"
   chown -R 10001:10001 "$result_dir"
-  chatbi_container "$project" "$result_dir" "$identifier" wrenai-test-chatbi-smoke 2>&1 | tee "$result_dir/chatbi-smoke.log"
+  chatbi_container "$project" "$result_dir" "$identifier" wrenai-test-chatbi-smoke 40 2>&1 | tee "$result_dir/chatbi-smoke.log"
   test -s "$result_dir/$identifier.json"
   run_score "$project" "$result_dir" "$identifier"
 }

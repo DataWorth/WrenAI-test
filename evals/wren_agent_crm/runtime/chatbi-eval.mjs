@@ -3,6 +3,8 @@ import { runAgent } from "./agent-common.mjs";
 
 const id = Number(process.argv[2]);
 if (!Number.isInteger(id)) throw new Error("题目 ID 必须是整数");
+const maxTurns = Number(process.env.WRENAI_TEST_MAX_TURNS || "16");
+if (!Number.isInteger(maxTurns) || maxTurns < 1) throw new Error("WRENAI_TEST_MAX_TURNS 必须是正整数");
 
 const benchmarkPath = process.env.WRENAI_TEST_BENCHMARK || "/benchmarks/crm_30_core_100_qna.jsonl";
 const tests = fs.readFileSync(benchmarkPath, "utf8").trim().split("\n").map(JSON.parse);
@@ -20,7 +22,7 @@ const prompt = [
 
 let result;
 try {
-  result = await runAgent(prompt, "wren_chatbi", "http://127.0.0.1:8080/mcp", 16, {
+  result = await runAgent(prompt, "wren_chatbi", "http://127.0.0.1:8080/mcp", maxTurns, {
     cwd: "/workspace",
     skills: ["wren"],
     tools: ["Bash"],
