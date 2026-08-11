@@ -12,6 +12,9 @@ RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin agent
 COPY --chown=agent:agent evals/wren_agent_crm/runtime/wrenai-test-mdl-agent.mjs ./
 COPY --chown=agent:agent evals/wren_agent_crm/runtime/wrenai-test-human-agent.mjs ./
 COPY --chown=agent:agent evals/wren_agent_crm/runtime/wrenai-test-user-input.mjs ./
+COPY --chown=agent:agent evals/wren_agent_crm/runtime/agent-common.mjs ./
+COPY --chown=agent:agent evals/wren_agent_crm/runtime/chatbi-agent.mjs ./
+COPY --chown=agent:agent evals/wren_agent_crm/runtime/chatbi-eval.mjs ./
 RUN mkdir -p /home/agent/.claude/skills/wren && chown -R agent:agent /home/agent/.claude
 COPY --chown=agent:agent skills/wren/SKILL.md /home/agent/.claude/skills/wren/SKILL.md
 USER agent

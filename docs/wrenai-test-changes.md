@@ -53,16 +53,16 @@ relationships:
 
 | 资产 | 数量或位置 |
 |---|---|
-| CRM 数据表 | 8 张核心表 |
+| CRM 数据表 | 30 张核心表 |
 | Canonical MDL | 空项目，0 个模型、0 个 Cube、无构建产物 |
 | 每次测试项目 | `/opt/wrenai-test/runs/<run-id>/project` |
 | View | 0 个 |
-| Chat BI 基准 | 100 题，位于 `benchmarks/crm_100_qna.jsonl` |
+| Chat BI 基准 | 100 题，活动集位于 `benchmarks/crm_30_core_100_qna.jsonl`；历史55表集 `benchmarks/crm_100_qna.jsonl` 仅保留对照 |
 | CRM mock 数据生成器 | `runtime/bootstrap_crm.py` |
 
 `target/mdl.json`、运行日志、评分结果和生成后的 `crm-seed.sql` 不纳入 Git。数据库可由 `bootstrap_crm.py` 重新生成。
 
-旧55模型、99关系和Cube已从活动项目移除并单独备份。新的MDL、业务语义和Cube必须由每次run-specific测试重新生成并通过 `validate`、`build` 和实际查询验证。
+旧55模型、99关系和Cube已从活动项目移除并单独备份。活动数据库保留30张核心CRM表及其46条内部外键；新的MDL、业务语义和Cube必须由每次run-specific测试重新生成并通过 `validate`、`build` 和实际查询验证。
 
 ## 目录适配
 

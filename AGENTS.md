@@ -151,7 +151,7 @@ test -s "$WRENAI_TEST_PROJECT/target/mdl.json"
 python3 -m json.tool "$WRENAI_TEST_PROJECT/target/mdl.json" >/dev/null
 ```
 
-Acceptance requires a zero exit status, a parseable manifest, 8 expected models, valid relationships, and no unapproved source-YAML changes.
+Acceptance requires a zero exit status, a parseable manifest, 30 expected models, valid relationships, and no unapproved source-YAML changes.
 
 ## Semantic-model Agent tests
 
@@ -206,7 +206,7 @@ The interactive Chat BI Agent is capped at 40 SDK turns. A successful smoke test
 
 Run the benchmark only after a single-question smoke test passes and the user confirms the model name and expected API cost.
 
-The historical benchmark scripts are not exposed through `wrenai-testctl`. A benchmark requires a separate approved plan after the single-question smoke test passes.
+`wrenai-testctl benchmark <project>` runs the active 30-table benchmark (`benchmarks/crm_30_core_100_qna.jsonl`) and writes its per-question artifacts under the corresponding run result directory. The historical 55-table set (`benchmarks/crm_100_qna.jsonl`) is retained for comparison only and must not be used against the 30-table database.
 
 Each benchmark question is capped at 16 SDK turns. `score.py` must report SQL-runnable, exact-answer, and value-set metrics. Preserve the generated result directory and record:
 
