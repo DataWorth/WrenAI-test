@@ -9,7 +9,7 @@ def markdown_cell(value):
 
 
 def yaml_value(text, key):
-    match = re.search(rf"^{re.escape(key)}:\\s*[\"']?([^\\n\"']+)", text, re.MULTILINE)
+    match = re.search(rf"^{re.escape(key)}:\s*[\"']?([^\n\"']+)", text, re.MULTILINE)
     return match.group(1).strip() if match else ""
 
 
@@ -17,11 +17,12 @@ def model_inventory(project):
     rows = []
     for path in sorted((project / "models").rglob("*.yml")):
         text = path.read_text(encoding="utf-8")
-        columns = len(re.findall(r"^\\s*- name:", text, re.MULTILINE))
+        columns = len(re.findall(r"^-\s+name:", text, re.MULTILINE))
+        description_match = re.search(r"^\s+description:\s*([^\n]+)", text, re.MULTILINE)
         rows.append({
             "file": path.relative_to(project).as_posix(),
             "name": yaml_value(text, "name") or path.stem,
-            "description": yaml_value(text, "description"),
+            "description": description_match.group(1).strip(" |-") if description_match else "",
             "columns": columns,
         })
     return rows
@@ -38,6 +39,12 @@ def transcript_rows(path):
             continue
         question = item.get("question") or item.get("prompt") or item.get("text") or ""
         answer = item.get("answer") or item.get("response") or item.get("input") or ""
+        if isinstance(question, dict):
+            options = question.get("options") or []
+            if isinstance(answer, str) and answer.isdigit() and 1 <= int(answer) <= len(options):
+                choice = options[int(answer) - 1].get("label", "")
+                answer = f"{choice}（选项 {answer}）" if choice else answer
+            question = question.get("question", "")
         if question or answer:
             rows.append((question, answer))
     return rows
@@ -58,7 +65,7 @@ def main():
     results = Path(args.results)
     models = model_inventory(project)
     relationships = project / "relationships.yml"
-    relation_count = len(re.findall(r"^\\s*- name:", relationships.read_text(encoding="utf-8"), re.MULTILINE)) if relationships.exists() else 0
+    relation_count = len(re.findall(r"^\s*-\s+name:", relationships.read_text(encoding="utf-8"), re.MULTILINE)) if relationships.exists() else 0
     knowledge = [path.relative_to(project).as_posix() for path in sorted((project / "knowledge").rglob("*")) if path.is_file()]
     benchmark_path = results / "chatbi-benchmark" / "benchmark_report.json"
     benchmark = json.loads(benchmark_path.read_text(encoding="utf-8")) if benchmark_path.exists() else {}
