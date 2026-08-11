@@ -76,20 +76,20 @@ def relationship_questions_55():
 def relationship_questions_30_core():
     return [
         ("按客户区域统计商机数量与商机金额。", "SELECT a.region, COUNT(o.opportunity_id) AS opportunity_count, SUM(o.amount) AS total_amount FROM opportunities o JOIN accounts a ON o.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
-        ("按商机阶段统计商机数量和加权管道金额。", "SELECT s.record_name AS stage_name, COUNT(o.opportunity_id) AS opportunity_count, SUM(o.amount*o.probability/100) AS weighted_amount FROM opportunities o JOIN opportunity_stages s ON o.opportunity_stage_id=s.opportunity_stage_id GROUP BY s.record_name ORDER BY stage_name"),
-        ("按线索来源统计线索数量和金额。", "SELECT s.record_name AS source_name, COUNT(l.lead_id) AS lead_count, SUM(l.amount) AS total_amount FROM leads l JOIN lead_sources s ON l.lead_source_id=s.lead_source_id GROUP BY s.record_name ORDER BY source_name"),
+        ("按商机业务阶段统计商机数量和加权管道金额。", "SELECT o.stage AS stage_name, COUNT(o.opportunity_id) AS opportunity_count, SUM(o.amount*o.probability/100) AS weighted_amount FROM opportunities o GROUP BY o.stage ORDER BY stage_name"),
+        ("按线索实际来源统计线索数量。", "SELECT l.source AS source_name, COUNT(l.lead_id) AS lead_count FROM leads l GROUP BY l.source ORDER BY source_name"),
         ("按客户区域统计联系人数量。", "SELECT a.region, COUNT(c.contact_id) AS contact_count FROM contacts c JOIN accounts a ON c.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
         ("按客户区域统计销售订单金额。", "SELECT a.region, SUM(o.amount) AS order_amount FROM sales_orders o JOIN accounts a ON o.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
         ("按客户区域统计未关闭工单数量。", "SELECT a.region, COUNT(c.case_id) AS open_case_count FROM cases c JOIN accounts a ON c.account_id=a.account_id WHERE c.status <> '已关闭' GROUP BY a.region ORDER BY a.region"),
-        ("按销售辖区统计客户数量。", "SELECT t.record_name AS territory_name, COUNT(a.account_id) AS account_count FROM accounts a JOIN territories t ON a.territory_id=t.territory_id GROUP BY t.record_name ORDER BY territory_name"),
+        ("按销售辖区业务区域统计客户数量。", "SELECT t.region AS territory_name, COUNT(a.account_id) AS account_count FROM accounts a JOIN territories t ON a.territory_id=t.territory_id GROUP BY t.region ORDER BY territory_name"),
         ("按客户区域统计合同金额。", "SELECT a.region, SUM(c.amount) AS contract_amount FROM contracts c JOIN accounts a ON c.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
         ("按客户区域统计发票金额。", "SELECT a.region, SUM(i.amount) AS invoice_amount FROM invoices i JOIN accounts a ON i.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
         ("按客户区域统计回款金额。", "SELECT a.region, SUM(p.amount) AS payment_amount FROM payments p JOIN invoices i ON p.invoice_id=i.invoice_id JOIN accounts a ON i.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
-        ("按产品分类统计产品数量和产品金额。", "SELECT c.region, COUNT(p.product_id) AS product_count, SUM(p.amount) AS total_amount FROM products p JOIN product_categories c ON p.product_category_id=c.product_category_id GROUP BY c.region ORDER BY c.region"),
+        ("按产品分类统计产品数量。", "SELECT c.record_name AS product_category, COUNT(p.product_id) AS product_count FROM products p JOIN product_categories c ON p.product_category_id=c.product_category_id GROUP BY c.record_name ORDER BY product_category"),
         ("按销售人员区域统计负责商机数量。", "SELECT u.region, COUNT(o.opportunity_id) AS opportunity_count FROM opportunities o JOIN crm_users u ON o.owner_user_id=u.user_id GROUP BY u.region ORDER BY u.region"),
         ("按营销活动统计活动成员数量。", "SELECT c.record_name AS campaign_name, COUNT(m.campaign_member_id) AS member_count FROM campaign_members m JOIN campaigns c ON m.campaign_id=c.campaign_id GROUP BY c.record_name ORDER BY campaign_name"),
         ("按商机状态统计报价单数量和金额。", "SELECT o.status, COUNT(q.quote_id) AS quote_count, SUM(q.amount) AS total_amount FROM quotes q JOIN opportunities o ON q.opportunity_id=o.opportunity_id GROUP BY o.status ORDER BY o.status"),
-        ("按产品分类统计销售订单明细数量。", "SELECT c.region, COUNT(i.sales_order_item_id) AS sales_order_item_count FROM sales_order_items i JOIN products p ON i.product_id=p.product_id JOIN product_categories c ON p.product_category_id=c.product_category_id GROUP BY c.region ORDER BY c.region"),
+        ("按产品分类统计销售订单明细数量。", "SELECT c.record_name AS product_category, COUNT(i.sales_order_item_id) AS sales_order_item_count FROM sales_order_items i JOIN products p ON i.product_id=p.product_id JOIN product_categories c ON p.product_category_id=c.product_category_id GROUP BY c.record_name ORDER BY product_category"),
     ]
 
 
@@ -115,12 +115,49 @@ def tests(set_name):
     for table in status_tables:
         out.append(q(identifier, "status_distribution", f"按状态统计{CN[table]}的记录数。", f"SELECT status, COUNT(*) AS record_count FROM {table} GROUP BY status ORDER BY status"))
         identifier += 1
-    for table in region_tables:
-        out.append(q(identifier, "region_amount", f"按区域汇总{CN[table]}的金额。", f"SELECT region, SUM(amount) AS total_amount FROM {table} GROUP BY region ORDER BY region"))
-        identifier += 1
-    for table in stage_tables:
-        out.append(q(identifier, "stage_amount", f"按阶段统计{CN[table]}的记录数和金额。", f"SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM {table} GROUP BY stage ORDER BY stage"))
-        identifier += 1
+    if set_name == "crm_30_core":
+        business_aggregates = [
+            ("按客户区域汇总客户累计交易金额。", "SELECT region, SUM(amount) AS total_amount FROM accounts GROUP BY region ORDER BY region"),
+            ("按商机区域汇总商机金额。", "SELECT region, SUM(amount) AS total_amount FROM opportunities GROUP BY region ORDER BY region"),
+            ("按报价单区域汇总报价金额。", "SELECT region, SUM(amount) AS total_amount FROM quotes GROUP BY region ORDER BY region"),
+            ("按销售订单区域汇总订单金额。", "SELECT region, SUM(amount) AS total_amount FROM sales_orders GROUP BY region ORDER BY region"),
+            ("按发票区域汇总发票金额。", "SELECT region, SUM(amount) AS total_amount FROM invoices GROUP BY region ORDER BY region"),
+            ("按合同区域汇总合同金额。", "SELECT region, SUM(amount) AS total_amount FROM contracts GROUP BY region ORDER BY region"),
+            ("按客户区域统计回款金额。", "SELECT a.region, SUM(p.amount) AS payment_amount FROM payments p JOIN invoices i ON p.invoice_id=i.invoice_id JOIN accounts a ON i.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
+            ("按客户区域统计商机产品行项目金额。", "SELECT a.region, SUM(op.amount) AS total_amount FROM opportunity_products op JOIN opportunities o ON op.opportunity_id=o.opportunity_id JOIN accounts a ON o.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
+            ("按客户区域统计销售订单明细金额。", "SELECT a.region, SUM(i.amount) AS total_amount FROM sales_order_items i JOIN sales_orders o ON i.sales_order_id=o.sales_order_id JOIN accounts a ON o.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
+            ("按商机业务阶段统计商机数量和金额。", "SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM opportunities GROUP BY stage ORDER BY stage"),
+            ("按报价单业务阶段统计报价单数量和金额。", "SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM quotes GROUP BY stage ORDER BY stage"),
+            ("按合同业务阶段统计合同数量和金额。", "SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM contracts GROUP BY stage ORDER BY stage"),
+            ("按销售订单业务阶段统计订单数量和金额。", "SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM sales_orders GROUP BY stage ORDER BY stage"),
+            ("按商机业务阶段统计商机产品行项目数量和金额。", "SELECT o.stage, COUNT(op.opportunity_product_id) AS record_count, SUM(op.amount) AS total_amount FROM opportunity_products op JOIN opportunities o ON op.opportunity_id=o.opportunity_id GROUP BY o.stage ORDER BY o.stage"),
+            ("按销售订单业务阶段统计订单明细数量和金额。", "SELECT o.stage, COUNT(i.sales_order_item_id) AS record_count, SUM(i.amount) AS total_amount FROM sales_order_items i JOIN sales_orders o ON i.sales_order_id=o.sales_order_id GROUP BY o.stage ORDER BY o.stage"),
+            ("按商机业务阶段统计加权管道金额。", "SELECT stage, SUM(amount * probability / 100) AS weighted_amount FROM opportunities GROUP BY stage ORDER BY stage"),
+            ("按销售辖区业务区域统计客户数量。", "SELECT t.region AS territory_name, COUNT(a.account_id) AS account_count FROM accounts a JOIN territories t ON a.territory_id=t.territory_id GROUP BY t.region ORDER BY territory_name"),
+            ("按客户区域统计客户数量。", "SELECT region, COUNT(account_id) AS account_count FROM accounts GROUP BY region ORDER BY region"),
+            ("按客户区域统计联系人数量。", "SELECT a.region, COUNT(c.contact_id) AS contact_count FROM contacts c JOIN accounts a ON c.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
+            ("按客户区域统计工单数量。", "SELECT a.region, COUNT(c.case_id) AS case_count FROM cases c JOIN accounts a ON c.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
+            ("按商机来源统计商机数量。", "SELECT source, COUNT(opportunity_id) AS opportunity_count FROM opportunities GROUP BY source ORDER BY source"),
+            ("按线索实际来源统计线索数量。", "SELECT source, COUNT(lead_id) AS lead_count FROM leads GROUP BY source ORDER BY source"),
+            ("按营销活动统计活动成员数量。", "SELECT c.record_name AS campaign_name, COUNT(m.campaign_member_id) AS member_count FROM campaign_members m JOIN campaigns c ON m.campaign_id=c.campaign_id GROUP BY c.record_name ORDER BY campaign_name"),
+            ("按产品分类统计产品数量。", "SELECT c.record_name AS product_category, COUNT(p.product_id) AS product_count FROM products p JOIN product_categories c ON p.product_category_id=c.product_category_id GROUP BY c.record_name ORDER BY product_category"),
+            ("按产品分类统计销售订单明细数量。", "SELECT c.record_name AS product_category, COUNT(i.sales_order_item_id) AS sales_order_item_count FROM sales_order_items i JOIN products p ON i.product_id=p.product_id JOIN product_categories c ON p.product_category_id=c.product_category_id GROUP BY c.record_name ORDER BY product_category"),
+            ("按商机状态统计报价单数量和金额。", "SELECT o.status, COUNT(q.quote_id) AS quote_count, SUM(q.amount) AS total_amount FROM quotes q JOIN opportunities o ON q.opportunity_id=o.opportunity_id GROUP BY o.status ORDER BY o.status"),
+            ("按客户区域统计回款笔数。", "SELECT a.region, COUNT(p.payment_id) AS payment_count FROM payments p JOIN invoices i ON p.invoice_id=i.invoice_id JOIN accounts a ON i.account_id=a.account_id GROUP BY a.region ORDER BY a.region"),
+            ("按商机业务阶段统计平均赢单概率。", "SELECT stage, AVG(probability) AS average_probability FROM opportunities GROUP BY stage ORDER BY stage"),
+            ("按销售人员区域统计负责商机数量。", "SELECT u.region, COUNT(o.opportunity_id) AS opportunity_count FROM opportunities o JOIN crm_users u ON o.owner_user_id=u.user_id GROUP BY u.region ORDER BY u.region"),
+            ("按销售人员区域汇总负责商机金额。", "SELECT u.region, SUM(o.amount) AS total_amount FROM opportunities o JOIN crm_users u ON o.owner_user_id=u.user_id GROUP BY u.region ORDER BY u.region"),
+        ]
+        for question, sql in business_aggregates:
+            out.append(q(identifier, "business_aggregate", question, sql))
+            identifier += 1
+    else:
+        for table in region_tables:
+            out.append(q(identifier, "region_amount", f"按区域汇总{CN[table]}的金额。", f"SELECT region, SUM(amount) AS total_amount FROM {table} GROUP BY region ORDER BY region"))
+            identifier += 1
+        for table in stage_tables:
+            out.append(q(identifier, "stage_amount", f"按阶段统计{CN[table]}的记录数和金额。", f"SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM {table} GROUP BY stage ORDER BY stage"))
+            identifier += 1
     for question, sql in spec["relationships"]():
         out.append(q(identifier, "relationship", question, sql))
         identifier += 1

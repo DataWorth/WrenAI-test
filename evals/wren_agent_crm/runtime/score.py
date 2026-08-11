@@ -2,6 +2,7 @@ import argparse
 import datetime
 import decimal
 import json
+import re
 import os
 import subprocess
 from collections import Counter
@@ -34,6 +35,17 @@ def sorted_rows(rows, include_keys=True):
     else:
         normalized = [sorted(normalize(row).values(), key=lambda value: json.dumps(value, ensure_ascii=False, sort_keys=True)) for row in rows]
     return sorted(normalized, key=lambda row: json.dumps(row, ensure_ascii=False, sort_keys=True))
+
+
+def final_sql(agent):
+    text = agent.get("final_text")
+    if not isinstance(text, str):
+        return None
+    matches = re.findall(r"```(?:sql)?\s*\n(.*?)```", text, flags=re.IGNORECASE | re.DOTALL)
+    if not matches:
+        return None
+    sql = matches[-1].strip()
+    return sql or None
 
 
 def run_query(sql, workspace):
@@ -121,7 +133,7 @@ def score(tests, results, workspace):
             item["agent_result_subtype"] = agent.get("result_subtype")
             item["usage_guide_fetched"] = bool(agent.get("usage_guide_fetched"))
             item["mcp_tool_calls"] = agent.get("mcp_tool_calls", [])
-            item["candidate_sql"] = sql_list[-1] if sql_list else None
+            item["candidate_sql"] = final_sql(agent) or (sql_list[-1] if sql_list else None)
             item["agent_error"] = agent.get("error")
             if item["candidate_sql"]:
                 answer, error = run_query(item["candidate_sql"], workspace)

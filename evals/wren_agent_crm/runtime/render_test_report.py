@@ -73,7 +73,7 @@ def main():
     grill = transcript_rows(results / "human-grill-transcript.jsonl")
 
     lines = [
-        "# WrenAI 30表 CRM 语义构建与 Chat BI 测试报告",
+        "# SemWave 30表 CRM 语义构建与 Chat BI 测试报告",
         "",
         "## 执行范围",
         "",
