@@ -170,7 +170,7 @@ start_mcp() {
 }
 
 generate_benchmark() {
-  docker run --rm --network "$NETWORK" \
+  docker run --rm --entrypoint python3 --network "$NETWORK" \
     --env-file "$CANONICAL_PROJECT/.env" \
     -v "$RUNTIME/benchmark.py:/app/benchmark.py:ro" \
     -v "$ROOT/benchmarks:/benchmarks:rw" \
@@ -186,7 +186,7 @@ run_score() {
   model=$(awk -F= '$1=="ANTHROPIC_MODEL" {print $2}' "$RUNTIME/bailian.env")
   score_args=(python3 /app/score.py --benchmark "/benchmarks/$BENCHMARK_NAME" --results /results --workspace /workspace)
   if test -n "$only_id"; then score_args+=(--only "$only_id"); fi
-  docker run --rm --network "$NETWORK" \
+  docker run --rm --entrypoint python3 --network "$NETWORK" \
     --env-file "$CANONICAL_PROJECT/.env" \
     -e WREN_HOME=/wren-home \
     -e ANTHROPIC_MODEL="$model" \
@@ -202,7 +202,7 @@ run_score() {
 verify_gold() {
   project=$1
   require_project "$project"
-  docker run --rm --network "$NETWORK" \
+  docker run --rm --entrypoint python3 --network "$NETWORK" \
     --env-file "$CANONICAL_PROJECT/.env" \
     -e WREN_HOME=/wren-home \
     -e WRENAI_TEST_BENCHMARK="/benchmarks/$BENCHMARK_NAME" \
