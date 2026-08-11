@@ -108,108 +108,108 @@
 
 ### 每题结果
 
-| ID | 类别 | 问题 | SQL可运行 | 精确答案 | 值集合匹配 | 错误 |
-|---:|---|---|:---:|:---:|:---:|---|
-| 1 | single_count | 统计组织的记录数。 | 是 | 否 | 是 |  |
-| 2 | single_count | 统计部门的记录数。 | 是 | 否 | 否 |  |
-| 3 | single_count | 统计销售辖区的记录数。 | 是 | 是 | 是 |  |
-| 4 | single_count | 统计团队的记录数。 | 是 | 是 | 是 |  |
-| 5 | single_count | 统计CRM用户的记录数。 | 是 | 否 | 是 |  |
-| 6 | single_count | 统计角色的记录数。 | 是 | 否 | 是 |  |
-| 7 | single_count | 统计用户角色分配的记录数。 | 是 | 否 | 是 |  |
-| 8 | single_count | 统计客户的记录数。 | 是 | 否 | 是 |  |
-| 9 | single_count | 统计联系人的记录数。 | 是 | 否 | 是 |  |
-| 10 | single_count | 统计线索来源的记录数。 | 是 | 否 | 否 |  |
-| 11 | single_count | 统计线索状态的记录数。 | 是 | 否 | 否 |  |
-| 12 | single_count | 统计线索培育序列的记录数。 | 是 | 是 | 是 |  |
-| 13 | single_count | 统计线索的记录数。 | 是 | 否 | 是 |  |
-| 14 | single_count | 统计线索分配的记录数。 | 是 | 否 | 是 |  |
-| 15 | single_count | 统计营销活动的记录数。 | 是 | 是 | 是 |  |
-| 16 | single_count | 统计活动成员的记录数。 | 是 | 否 | 是 |  |
-| 17 | single_count | 统计商机阶段的记录数。 | 是 | 是 | 是 |  |
-| 18 | single_count | 统计产品分类的记录数。 | 是 | 是 | 是 |  |
-| 19 | single_count | 统计产品的记录数。 | 是 | 否 | 是 |  |
-| 20 | single_count | 统计价目表的记录数。 | 是 | 否 | 是 |  |
-| 21 | single_count | 统计商机的记录数。 | 是 | 否 | 是 |  |
-| 22 | single_count | 统计商机联系人的记录数。 | 是 | 是 | 是 |  |
-| 23 | single_count | 统计商机产品的记录数。 | 是 | 是 | 是 |  |
-| 24 | single_count | 统计报价单的记录数。 | 是 | 是 | 是 |  |
-| 25 | single_count | 统计销售订单的记录数。 | 是 | 否 | 是 |  |
-| 26 | single_count | 统计销售订单明细的记录数。 | 是 | 是 | 是 |  |
-| 27 | single_count | 统计合同的记录数。 | 是 | 否 | 是 |  |
-| 28 | single_count | 统计发票的记录数。 | 是 | 否 | 是 |  |
-| 29 | single_count | 统计回款的记录数。 | 是 | 否 | 是 |  |
-| 30 | single_count | 统计客服工单的记录数。 | 是 | 是 | 是 |  |
-| 31 | status_distribution | 按状态统计组织的记录数。 | 是 | 是 | 是 |  |
-| 32 | status_distribution | 按状态统计部门的记录数。 | 是 | 是 | 是 |  |
-| 33 | status_distribution | 按状态统计销售辖区的记录数。 | 是 | 是 | 是 |  |
-| 34 | status_distribution | 按状态统计团队的记录数。 | 是 | 是 | 是 |  |
-| 35 | status_distribution | 按状态统计CRM用户的记录数。 | 是 | 是 | 是 |  |
-| 36 | status_distribution | 按状态统计角色的记录数。 | 是 | 是 | 是 |  |
-| 37 | status_distribution | 按状态统计用户角色分配的记录数。 | 是 | 是 | 是 |  |
-| 38 | status_distribution | 按状态统计客户的记录数。 | 是 | 是 | 是 |  |
-| 39 | status_distribution | 按状态统计联系人的记录数。 | 是 | 是 | 是 |  |
-| 40 | status_distribution | 按状态统计线索来源的记录数。 | 是 | 是 | 是 |  |
-| 41 | status_distribution | 按状态统计线索状态的记录数。 | 是 | 否 | 否 |  |
-| 42 | status_distribution | 按状态统计线索培育序列的记录数。 | 是 | 是 | 是 |  |
-| 43 | status_distribution | 按状态统计线索的记录数。 | 是 | 否 | 是 |  |
-| 44 | status_distribution | 按状态统计线索分配的记录数。 | 是 | 是 | 是 |  |
-| 45 | status_distribution | 按状态统计营销活动的记录数。 | 是 | 否 | 是 |  |
-| 46 | status_distribution | 按状态统计活动成员的记录数。 | 是 | 是 | 是 |  |
-| 47 | status_distribution | 按状态统计商机阶段的记录数。 | 是 | 是 | 是 |  |
-| 48 | status_distribution | 按状态统计产品分类的记录数。 | 是 | 是 | 是 |  |
-| 49 | status_distribution | 按状态统计产品的记录数。 | 是 | 是 | 是 |  |
-| 50 | status_distribution | 按状态统计价目表的记录数。 | 是 | 是 | 是 |  |
-| 51 | status_distribution | 按状态统计商机的记录数。 | 是 | 是 | 是 |  |
-| 52 | status_distribution | 按状态统计商机联系人的记录数。 | 是 | 是 | 是 |  |
-| 53 | status_distribution | 按状态统计商机产品的记录数。 | 是 | 是 | 是 |  |
-| 54 | status_distribution | 按状态统计报价单的记录数。 | 是 | 是 | 是 |  |
-| 55 | status_distribution | 按状态统计销售订单的记录数。 | 是 | 是 | 是 |  |
-| 56 | region_amount | 按区域汇总组织的金额。 | 是 | 否 | 否 |  |
-| 57 | region_amount | 按区域汇总部门的金额。 | 是 | 否 | 否 |  |
-| 58 | region_amount | 按区域汇总销售辖区的金额。 | 是 | 否 | 否 |  |
-| 59 | region_amount | 按区域汇总团队的金额。 | 是 | 否 | 否 |  |
-| 60 | region_amount | 按区域汇总CRM用户的金额。 | 是 | 否 | 否 |  |
-| 61 | region_amount | 按区域汇总角色的金额。 | 是 | 否 | 否 |  |
-| 62 | region_amount | 按区域汇总用户角色分配的金额。 | 是 | 否 | 否 |  |
-| 63 | region_amount | 按区域汇总客户的金额。 | 是 | 是 | 是 |  |
-| 64 | region_amount | 按区域汇总联系人的金额。 | 是 | 否 | 否 |  |
-| 65 | region_amount | 按区域汇总线索来源的金额。 | 是 | 否 | 否 |  |
-| 66 | region_amount | 按区域汇总线索状态的金额。 | 是 | 否 | 否 |  |
-| 67 | region_amount | 按区域汇总线索培育序列的金额。 | 是 | 是 | 是 |  |
-| 68 | region_amount | 按区域汇总线索的金额。 | 是 | 否 | 否 |  |
-| 69 | region_amount | 按区域汇总线索分配的金额。 | 是 | 否 | 否 |  |
-| 70 | region_amount | 按区域汇总营销活动的金额。 | 是 | 是 | 是 |  |
-| 71 | stage_amount | 按阶段统计活动成员的记录数和金额。 | 是 | 是 | 是 |  |
-| 72 | stage_amount | 按阶段统计商机阶段的记录数和金额。 | 是 | 否 | 否 |  |
-| 73 | stage_amount | 按阶段统计产品分类的记录数和金额。 | 是 | 否 | 否 |  |
-| 74 | stage_amount | 按阶段统计产品的记录数和金额。 | 是 | 否 | 否 |  |
-| 75 | stage_amount | 按阶段统计价目表的记录数和金额。 | 是 | 是 | 是 |  |
-| 76 | stage_amount | 按阶段统计商机的记录数和金额。 | 是 | 是 | 是 |  |
-| 77 | stage_amount | 按阶段统计商机联系人的记录数和金额。 | 是 | 否 | 否 |  |
-| 78 | stage_amount | 按阶段统计商机产品的记录数和金额。 | 是 | 否 | 否 |  |
-| 79 | stage_amount | 按阶段统计报价单的记录数和金额。 | 是 | 否 | 是 |  |
-| 80 | stage_amount | 按阶段统计销售订单的记录数和金额。 | 是 | 是 | 是 |  |
-| 81 | stage_amount | 按阶段统计销售订单明细的记录数和金额。 | 是 | 否 | 否 |  |
-| 82 | stage_amount | 按阶段统计合同的记录数和金额。 | 是 | 否 | 是 |  |
-| 83 | stage_amount | 按阶段统计发票的记录数和金额。 | 是 | 否 | 是 |  |
-| 84 | stage_amount | 按阶段统计回款的记录数和金额。 | 是 | 否 | 是 |  |
-| 85 | stage_amount | 按阶段统计客服工单的记录数和金额。 | 是 | 是 | 是 |  |
-| 86 | relationship | 按客户区域统计商机数量与商机金额。 | 是 | 是 | 是 |  |
-| 87 | relationship | 按商机阶段统计商机数量和加权管道金额。 | 是 | 否 | 否 |  |
-| 88 | relationship | 按线索来源统计线索数量和金额。 | 是 | 否 | 否 |  |
-| 89 | relationship | 按客户区域统计联系人数量。 | 是 | 是 | 是 |  |
-| 90 | relationship | 按客户区域统计销售订单金额。 | 是 | 否 | 是 |  |
-| 91 | relationship | 按客户区域统计未关闭工单数量。 | 是 | 是 | 是 |  |
-| 92 | relationship | 按销售辖区统计客户数量。 | 是 | 否 | 否 |  |
-| 93 | relationship | 按客户区域统计合同金额。 | 是 | 否 | 是 |  |
-| 94 | relationship | 按客户区域统计发票金额。 | 是 | 否 | 是 |  |
-| 95 | relationship | 按客户区域统计回款金额。 | 是 | 否 | 是 |  |
-| 96 | relationship | 按产品分类统计产品数量和产品金额。 | 是 | 否 | 否 |  |
-| 97 | relationship | 按销售人员区域统计负责商机数量。 | 是 | 是 | 是 |  |
-| 98 | relationship | 按营销活动统计活动成员数量。 | 是 | 是 | 是 |  |
-| 99 | relationship | 按商机状态统计报价单数量和金额。 | 是 | 是 | 是 |  |
-| 100 | relationship | 按产品分类统计销售订单明细数量。 | 是 | 否 | 否 |  |
+| ID | 类别 | 问题 | 候选SQL | SQL可运行 | 精确答案 | 值集合匹配 | 错误 |
+|---:|---|---|---|:---:|:---:|:---:|---|
+| 1 | single_count | 统计组织的记录数。 | `SELECT COUNT(*) AS organization_count FROM organizations` | 是 | 否 | 是 |  |
+| 2 | single_count | 统计部门的记录数。 | `SELECT region, COUNT(*) AS record_count FROM departments GROUP BY region ORDER BY record_count DESC` | 是 | 否 | 否 |  |
+| 3 | single_count | 统计销售辖区的记录数。 | `SELECT COUNT(*) AS record_count FROM territories` | 是 | 是 | 是 |  |
+| 4 | single_count | 统计团队的记录数。 | `SELECT COUNT(*) AS record_count FROM teams` | 是 | 是 | 是 |  |
+| 5 | single_count | 统计CRM用户的记录数。 | `SELECT COUNT(*) AS user_count FROM crm_users` | 是 | 否 | 是 |  |
+| 6 | single_count | 统计角色的记录数。 | `SELECT COUNT(*) AS role_count FROM roles` | 是 | 否 | 是 |  |
+| 7 | single_count | 统计用户角色分配的记录数。 | `SELECT COUNT(*) AS user_role_count FROM user_roles` | 是 | 否 | 是 |  |
+| 8 | single_count | 统计客户的记录数。 | `SELECT COUNT(*) AS customer_count FROM accounts` | 是 | 否 | 是 |  |
+| 9 | single_count | 统计联系人的记录数。 | `SELECT COUNT(*) AS contact_count FROM contacts` | 是 | 否 | 是 |  |
+| 10 | single_count | 统计线索来源的记录数。 | `SELECT source, COUNT(*) AS record_count FROM leads GROUP BY source ORDER BY record_count DESC` | 是 | 否 | 否 |  |
+| 11 | single_count | 统计线索状态的记录数。 | `SELECT status, COUNT(*) AS record_count FROM leads GROUP BY status ORDER BY record_count DESC` | 是 | 否 | 否 |  |
+| 12 | single_count | 统计线索培育序列的记录数。 | `SELECT COUNT(*) AS record_count FROM nurture_sequences` | 是 | 是 | 是 |  |
+| 13 | single_count | 统计线索的记录数。 | `SELECT COUNT(*) FROM leads` | 是 | 否 | 是 |  |
+| 14 | single_count | 统计线索分配的记录数。 | `SELECT COUNT(*) AS lead_assignment_count FROM lead_assignments` | 是 | 否 | 是 |  |
+| 15 | single_count | 统计营销活动的记录数。 | `SELECT COUNT(*) AS record_count FROM campaigns` | 是 | 是 | 是 |  |
+| 16 | single_count | 统计活动成员的记录数。 | `SELECT COUNT(*) AS campaign_member_count FROM campaign_members` | 是 | 否 | 是 |  |
+| 17 | single_count | 统计商机阶段的记录数。 | `SELECT COUNT(*) AS record_count FROM opportunity_stages` | 是 | 是 | 是 |  |
+| 18 | single_count | 统计产品分类的记录数。 | `SELECT COUNT(*) AS record_count FROM product_categories` | 是 | 是 | 是 |  |
+| 19 | single_count | 统计产品的记录数。 | `SELECT COUNT(*) AS product_count FROM products` | 是 | 否 | 是 |  |
+| 20 | single_count | 统计价目表的记录数。 | `SELECT COUNT(*) AS total_count FROM price_books` | 是 | 否 | 是 |  |
+| 21 | single_count | 统计商机的记录数。 | `SELECT COUNT(*) AS opportunity_count FROM opportunities` | 是 | 否 | 是 |  |
+| 22 | single_count | 统计商机联系人的记录数。 | `SELECT COUNT(*) AS record_count FROM opportunity_contacts` | 是 | 是 | 是 |  |
+| 23 | single_count | 统计商机产品的记录数。 | `SELECT COUNT(*) AS record_count FROM opportunity_products` | 是 | 是 | 是 |  |
+| 24 | single_count | 统计报价单的记录数。 | `SELECT COUNT(*) AS record_count FROM quotes` | 是 | 是 | 是 |  |
+| 25 | single_count | 统计销售订单的记录数。 | `SELECT COUNT(*) AS order_count FROM sales_orders` | 是 | 否 | 是 |  |
+| 26 | single_count | 统计销售订单明细的记录数。 | `SELECT COUNT(*) AS record_count FROM sales_order_items` | 是 | 是 | 是 |  |
+| 27 | single_count | 统计合同的记录数。 | `SELECT COUNT(contract_id) AS contract_count FROM contracts` | 是 | 否 | 是 |  |
+| 28 | single_count | 统计发票的记录数。 | `SELECT COUNT(*) FROM invoices` | 是 | 否 | 是 |  |
+| 29 | single_count | 统计回款的记录数。 | `SELECT COUNT(*) AS payment_record_count FROM payments` | 是 | 否 | 是 |  |
+| 30 | single_count | 统计客服工单的记录数。 | `SELECT COUNT(*) AS record_count FROM cases` | 是 | 是 | 是 |  |
+| 31 | status_distribution | 按状态统计组织的记录数。 | `SELECT status, COUNT(*) AS record_count FROM organizations GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 32 | status_distribution | 按状态统计部门的记录数。 | `SELECT status, COUNT(*) AS record_count FROM departments GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 33 | status_distribution | 按状态统计销售辖区的记录数。 | `SELECT status, COUNT(*) AS record_count FROM territories GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 34 | status_distribution | 按状态统计团队的记录数。 | `SELECT status, COUNT(*) AS record_count FROM teams GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 35 | status_distribution | 按状态统计CRM用户的记录数。 | `SELECT status, COUNT(*) AS record_count FROM crm_users GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 36 | status_distribution | 按状态统计角色的记录数。 | `SELECT status, COUNT(*) AS record_count FROM roles GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 37 | status_distribution | 按状态统计用户角色分配的记录数。 | `SELECT status, COUNT(*) AS record_count FROM user_roles GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 38 | status_distribution | 按状态统计客户的记录数。 | `SELECT status, COUNT(*) AS record_count FROM accounts GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 39 | status_distribution | 按状态统计联系人的记录数。 | `SELECT status, COUNT(*) AS record_count FROM contacts GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 40 | status_distribution | 按状态统计线索来源的记录数。 | `SELECT status, COUNT(*) AS record_count FROM lead_sources GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 41 | status_distribution | 按状态统计线索状态的记录数。 | `SELECT status, COUNT(*) AS record_count FROM leads GROUP BY status ORDER BY record_count DESC` | 是 | 否 | 否 |  |
+| 42 | status_distribution | 按状态统计线索培育序列的记录数。 | `SELECT status, COUNT(*) AS record_count FROM nurture_sequences GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 43 | status_distribution | 按状态统计线索的记录数。 | `SELECT leads.status AS "线索状态", COUNT(*) AS "记录数" FROM leads GROUP BY leads.status ORDER BY "记录数" DESC` | 是 | 否 | 是 |  |
+| 44 | status_distribution | 按状态统计线索分配的记录数。 | `SELECT status, COUNT(*) AS record_count FROM lead_assignments GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 45 | status_distribution | 按状态统计营销活动的记录数。 | `SELECT status, COUNT(*) AS campaign_count FROM campaigns GROUP BY status ORDER BY campaign_count DESC` | 是 | 否 | 是 |  |
+| 46 | status_distribution | 按状态统计活动成员的记录数。 | `SELECT status, COUNT(*) AS record_count FROM campaign_members GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 47 | status_distribution | 按状态统计商机阶段的记录数。 | `SELECT status, COUNT(*) AS record_count FROM opportunity_stages GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 48 | status_distribution | 按状态统计产品分类的记录数。 | `SELECT status, COUNT(*) AS record_count FROM product_categories GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 49 | status_distribution | 按状态统计产品的记录数。 | `SELECT status, COUNT(*) AS record_count FROM products GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 50 | status_distribution | 按状态统计价目表的记录数。 | `SELECT status, COUNT(*) AS record_count FROM price_books GROUP BY status` | 是 | 是 | 是 |  |
+| 51 | status_distribution | 按状态统计商机的记录数。 | `SELECT status, COUNT(*) AS record_count FROM opportunities GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 52 | status_distribution | 按状态统计商机联系人的记录数。 | `SELECT status, COUNT(*) AS record_count FROM opportunity_contacts GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 53 | status_distribution | 按状态统计商机产品的记录数。 | `SELECT status, COUNT(*) AS record_count FROM opportunity_products GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 54 | status_distribution | 按状态统计报价单的记录数。 | `SELECT status, COUNT(*) AS record_count FROM quotes GROUP BY status ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 55 | status_distribution | 按状态统计销售订单的记录数。 | `SELECT status, COUNT(*) AS record_count<br>FROM sales_orders<br>GROUP BY status<br>ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 56 | region_amount | 按区域汇总组织的金额。 | `SELECT region, SUM(amount) AS total_amount FROM accounts GROUP BY region ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 57 | region_amount | 按区域汇总部门的金额。 | `SELECT departments.region AS 区域, departments.record_name AS 部门, SUM(departments.amount) AS 金额 FROM departments GROUP BY departments.region, departments.record_name ORDER BY 区域, 部门` | 是 | 否 | 否 |  |
+| 58 | region_amount | 按区域汇总销售辖区的金额。 | `SELECT territories.region, SUM(accounts.amount) AS total_amount FROM accounts JOIN territories ON accounts.territory_id = territories.territory_id GROUP BY territories.region` | 是 | 否 | 否 |  |
+| 59 | region_amount | 按区域汇总团队的金额。 | `SELECT t.region AS team_region, SUM(o.amount) AS total_amount<br>FROM opportunities o<br>JOIN crm_users u ON o.owner_user_id = u.user_id<br>JOIN teams t ON u.team_id = t.team_id<br>GROUP BY t.region<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 60 | region_amount | 按区域汇总CRM用户的金额。 | `SELECT crm_users.region, HEX(crm_users.region) AS region_hex FROM crm_users GROUP BY crm_users.region` | 是 | 否 | 否 |  |
+| 61 | region_amount | 按区域汇总角色的金额。 | `SELECT accounts.region, roles.record_name, SUM(accounts.amount) AS total_amount<br>FROM accounts<br>JOIN crm_users ON accounts.owner_user_id = crm_users.user_id<br>JOIN user_roles ON crm_users.user_id = user_roles.user_id<br>JOIN roles ON user_roles.role_id = roles.role_id<br>GROUP BY accounts.region, roles.record_name<br>ORDER BY accounts.region, total_amount DESC` | 是 | 否 | 否 |  |
+| 62 | region_amount | 按区域汇总用户角色分配的金额。 | `SELECT<br>  accounts.region,<br>  roles.record_name AS role_name,<br>  SUM(accounts.amount) AS total_amount<br>FROM accounts<br>JOIN crm_users ON accounts.owner_user_id = crm_users.user_id<br>JOIN user_roles ON crm_users.user_id = user_roles.user_id<br>JOIN roles ON user_roles.role_id = roles.role_id<br>GROUP BY accounts.region, roles.record_name<br>ORDER BY accounts.region, total_amount DESC` | 是 | 否 | 否 |  |
+| 63 | region_amount | 按区域汇总客户的金额。 | `SELECT region, SUM(amount) AS total_amount FROM accounts GROUP BY region ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 64 | region_amount | 按区域汇总联系人的金额。 | `SELECT contacts.region, SUM(accounts.amount) AS total_amount<br>FROM contacts<br>JOIN accounts ON contacts.account_id = accounts.account_id<br>GROUP BY contacts.region<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 65 | region_amount | 按区域汇总线索来源的金额。 | `SELECT region AS region, source AS source, SUM(amount) AS total_amount FROM opportunities GROUP BY 1, 2` | 是 | 否 | 否 |  |
+| 66 | region_amount | 按区域汇总线索状态的金额。 | `SELECT region, status, SUM(amount) AS total_amount FROM opportunities GROUP BY region, status ORDER BY region, total_amount DESC` | 是 | 否 | 否 |  |
+| 67 | region_amount | 按区域汇总线索培育序列的金额。 | `SELECT region, SUM(amount) AS total_amount FROM nurture_sequences GROUP BY region ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 68 | region_amount | 按区域汇总线索的金额。 | `SELECT DISTINCT region FROM opportunities ORDER BY region` | 是 | 否 | 否 |  |
+| 69 | region_amount | 按区域汇总线索分配的金额。 | `SELECT l.region, SUM(o.amount) AS total_amount<br>FROM lead_assignments la<br>JOIN leads l ON la.lead_id = l.lead_id<br>JOIN opportunities o ON o.lead_id = l.lead_id<br>GROUP BY l.region<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 70 | region_amount | 按区域汇总营销活动的金额。 | `SELECT region, SUM(amount) AS total_amount FROM campaigns GROUP BY region ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 71 | stage_amount | 按阶段统计活动成员的记录数和金额。 | `SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM campaign_members GROUP BY stage ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 72 | stage_amount | 按阶段统计商机阶段的记录数和金额。 | `SELECT HEX(stage) AS stage_hex, COUNT(*) AS count, SUM(amount) AS total_amount FROM opportunities GROUP BY 1 ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 73 | stage_amount | 按阶段统计产品分类的记录数和金额。 | `SELECT<br>  opportunities.stage,<br>  product_categories.record_name AS product_category,<br>  COUNT(*) AS record_count,<br>  SUM(opportunity_products.amount) AS total_amount<br>FROM opportunity_products<br>JOIN opportunities ON opportunity_products.opportunity_id = opportunities.opportunity_id<br>JOIN products ON opportunity_products.product_id = products.product_id<br>JOIN product_categories ON products.product_category_id = product_categories.product_category_id<br>GROUP BY opportunities.stage, product_categories.record_name<br>ORDER BY opportunities.stage, total_amount DESC` | 是 | 否 | 否 |  |
+| 74 | stage_amount | 按阶段统计产品的记录数和金额。 | `SELECT <br>  opportunities.stage,<br>  COUNT(*) AS record_count,<br>  SUM(opportunity_products.amount) AS total_amount<br>FROM opportunity_products<br>JOIN opportunities ON opportunity_products.opportunity_id = opportunities.opportunity_id<br>GROUP BY opportunities.stage<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 75 | stage_amount | 按阶段统计价目表的记录数和金额。 | `SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM price_books GROUP BY stage ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 76 | stage_amount | 按阶段统计商机的记录数和金额。 | `SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM opportunities GROUP BY stage ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 77 | stage_amount | 按阶段统计商机联系人的记录数和金额。 | `SELECT o.stage,<br>       COUNT(oc.opportunity_contact_id) AS record_count,<br>       SUM(o.amount) AS total_amount<br>FROM opportunity_contacts oc<br>JOIN opportunities o ON oc.opportunity_id = o.opportunity_id<br>GROUP BY o.stage<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 78 | stage_amount | 按阶段统计商机产品的记录数和金额。 | `SELECT <br>  opportunities.stage,<br>  COUNT(opportunity_products.opportunity_product_id) AS record_count,<br>  SUM(opportunity_products.amount) AS total_amount<br>FROM opportunity_products<br>JOIN opportunities ON opportunity_products.opportunity_id = opportunities.opportunity_id<br>GROUP BY opportunities.stage<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 79 | stage_amount | 按阶段统计报价单的记录数和金额。 | `SELECT stage, COUNT(*) AS quote_count, SUM(amount) AS total_amount FROM quotes GROUP BY stage ORDER BY total_amount DESC` | 是 | 否 | 是 |  |
+| 80 | stage_amount | 按阶段统计销售订单的记录数和金额。 | `SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM sales_orders GROUP BY stage ORDER BY record_count DESC` | 是 | 是 | 是 |  |
+| 81 | stage_amount | 按阶段统计销售订单明细的记录数和金额。 | `SELECT <br>    sales_orders.stage,<br>    COUNT(sales_order_items.sales_order_item_id) AS record_count,<br>    SUM(sales_order_items.amount) AS total_amount<br>FROM sales_order_items<br>JOIN sales_orders ON sales_order_items.sales_order_id = sales_orders.sales_order_id<br>GROUP BY sales_orders.stage<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 82 | stage_amount | 按阶段统计合同的记录数和金额。 | `SELECT stage, COUNT(*) AS contract_count, SUM(amount) AS total_amount FROM contracts GROUP BY stage ORDER BY total_amount DESC` | 是 | 否 | 是 |  |
+| 83 | stage_amount | 按阶段统计发票的记录数和金额。 | `SELECT stage, COUNT(*) AS invoice_count, SUM(amount) AS total_amount FROM invoices GROUP BY stage ORDER BY total_amount DESC` | 是 | 否 | 是 |  |
+| 84 | stage_amount | 按阶段统计回款的记录数和金额。 | `SELECT<br>  stage AS "阶段",<br>  COUNT(*) AS "回款记录数",<br>  SUM(amount) AS "回款金额"<br>FROM payments<br>GROUP BY stage<br>ORDER BY SUM(amount) DESC` | 是 | 否 | 是 |  |
+| 85 | stage_amount | 按阶段统计客服工单的记录数和金额。 | `SELECT stage, COUNT(*) AS record_count, SUM(amount) AS total_amount FROM cases GROUP BY stage ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 86 | relationship | 按客户区域统计商机数量与商机金额。 | `SELECT region, COUNT(*) AS opportunity_count, SUM(amount) AS total_amount FROM opportunities GROUP BY region ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 87 | relationship | 按商机阶段统计商机数量和加权管道金额。 | `SELECT stage, COUNT(*) AS count, SUM(amount * probability / 100) AS weighted_amount FROM opportunities GROUP BY stage ORDER BY weighted_amount DESC` | 是 | 否 | 否 |  |
+| 88 | relationship | 按线索来源统计线索数量和金额。 | `SELECT<br>  leads.source AS lead_source,<br>  COUNT(*) AS lead_count,<br>  SUM(leads.amount) AS total_amount<br>FROM leads<br>GROUP BY leads.source<br>ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 89 | relationship | 按客户区域统计联系人数量。 | `SELECT region, COUNT(contact_id) AS contact_count FROM contacts GROUP BY region ORDER BY contact_count DESC` | 是 | 是 | 是 |  |
+| 90 | relationship | 按客户区域统计销售订单金额。 | `SELECT accounts.region, SUM(sales_orders.amount) AS total_amount<br>FROM sales_orders<br>JOIN accounts ON sales_orders.account_id = accounts.account_id<br>GROUP BY accounts.region<br>ORDER BY total_amount DESC` | 是 | 否 | 是 |  |
+| 91 | relationship | 按客户区域统计未关闭工单数量。 | `SELECT region, COUNT(*) AS open_case_count FROM cases WHERE status != '已关闭' GROUP BY region ORDER BY open_case_count DESC` | 是 | 是 | 是 |  |
+| 92 | relationship | 按销售辖区统计客户数量。 | `SELECT t.record_name, t.region, COUNT(a.account_id) AS customer_count<br>FROM accounts a<br>JOIN territories t ON a.territory_id = t.territory_id<br>GROUP BY t.record_name, t.region<br>ORDER BY t.record_name` | 是 | 否 | 否 |  |
+| 93 | relationship | 按客户区域统计合同金额。 | `SELECT contracts.region, SUM(contracts.amount) AS total_amount FROM contracts GROUP BY contracts.region ORDER BY total_amount DESC` | 是 | 否 | 是 |  |
+| 94 | relationship | 按客户区域统计发票金额。 | `SELECT region, SUM(amount) AS total_invoice_amount FROM invoices GROUP BY region ORDER BY total_invoice_amount DESC` | 是 | 否 | 是 |  |
+| 95 | relationship | 按客户区域统计回款金额。 | `SELECT accounts.region, SUM(payments.amount) AS payment_total FROM payments JOIN invoices ON payments.invoice_id = invoices.invoice_id JOIN accounts ON invoices.account_id = accounts.account_id GROUP BY accounts.region ORDER BY payment_total DESC` | 是 | 否 | 是 |  |
+| 96 | relationship | 按产品分类统计产品数量和产品金额。 | `SELECT pc.record_name AS product_category, COUNT(p.product_id) AS product_count, SUM(p.amount) AS total_amount FROM products p JOIN product_categories pc ON p.product_category_id = pc.product_category_id GROUP BY pc.record_name ORDER BY total_amount DESC` | 是 | 否 | 否 |  |
+| 97 | relationship | 按销售人员区域统计负责商机数量。 | `SELECT crm_users.region, COUNT(opportunities.opportunity_id) AS opportunity_count<br>FROM opportunities<br>JOIN crm_users ON opportunities.owner_user_id = crm_users.user_id<br>GROUP BY crm_users.region<br>ORDER BY opportunity_count DESC` | 是 | 是 | 是 |  |
+| 98 | relationship | 按营销活动统计活动成员数量。 | `SELECT c.record_name AS campaign_name, COUNT(cm.campaign_member_id) AS member_count FROM campaigns c LEFT JOIN campaign_members cm ON c.campaign_id = cm.campaign_id GROUP BY c.record_name ORDER BY member_count DESC` | 是 | 是 | 是 |  |
+| 99 | relationship | 按商机状态统计报价单数量和金额。 | `SELECT opportunities.status, COUNT(quotes.quote_id) AS quote_count, SUM(quotes.amount) AS total_amount FROM quotes JOIN opportunities ON quotes.opportunity_id = opportunities.opportunity_id GROUP BY opportunities.status ORDER BY total_amount DESC` | 是 | 是 | 是 |  |
+| 100 | relationship | 按产品分类统计销售订单明细数量。 | `SELECT product_categories.record_name AS product_category,<br>       COUNT(sales_order_items.sales_order_item_id) AS order_detail_count<br>FROM sales_order_items<br>JOIN products ON sales_order_items.product_id = products.product_id<br>JOIN product_categories ON products.product_category_id = product_categories.product_category_id<br>GROUP BY product_categories.record_name<br>ORDER BY order_detail_count DESC` | 是 | 否 | 否 |  |
 
 ## 验证证据
 
