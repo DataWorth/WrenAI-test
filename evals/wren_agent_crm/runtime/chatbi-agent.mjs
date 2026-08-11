@@ -14,7 +14,7 @@ const prompt = [
   "Question: " + question,
 ].join("\n\n");
 
-const result = await runAgent(prompt, "wren_chatbi", "http://wrenai-test-mcp:8080/mcp", 40, {
+const result = await runAgent(prompt, "wren_chatbi", "http://127.0.0.1:8080/mcp", 40, {
   cwd: "/workspace",
   skills: ["wren"],
   tools: ["Bash"],

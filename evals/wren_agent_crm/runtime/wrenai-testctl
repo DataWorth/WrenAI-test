@@ -222,7 +222,7 @@ chatbi_container() {
   test "$(docker inspect -f '{{.State.Status}}' "$MCP_CONTAINER")" = running
   docker rm -f "$name" >/dev/null 2>&1 || true
   docker run --rm --name "$name" \
-    --network "$NETWORK" \
+    --network "container:$MCP_CONTAINER" \
     --env-file "$RUNTIME/bailian.env" \
     -e WRENAI_TEST_BENCHMARK="/benchmarks/$BENCHMARK_NAME" \
     -v "$BENCHMARK_FILE:/benchmarks/$BENCHMARK_NAME:ro" \
