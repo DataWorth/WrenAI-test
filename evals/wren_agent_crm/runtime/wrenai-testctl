@@ -174,7 +174,7 @@ generate_benchmark() {
     --env-file "$CANONICAL_PROJECT/.env" \
     -v "$RUNTIME/benchmark.py:/app/benchmark.py:ro" \
     -v "$ROOT/benchmarks:/benchmarks:rw" \
-    "$CLI_IMAGE" python3 /app/benchmark.py generate crm_30_core
+    "$CLI_IMAGE" /app/benchmark.py generate crm_30_core
   test "$(wc -l < "$BENCHMARK_FILE" | tr -d ' ')" = 100
 }
 
@@ -184,7 +184,7 @@ run_score() {
   only_id=${3:-}
   require_project "$project"
   model=$(awk -F= '$1=="ANTHROPIC_MODEL" {print $2}' "$RUNTIME/bailian.env")
-  score_args=(python3 /app/score.py --benchmark "/benchmarks/$BENCHMARK_NAME" --results /results --workspace /workspace)
+  score_args=(/app/score.py --benchmark "/benchmarks/$BENCHMARK_NAME" --results /results --workspace /workspace)
   if test -n "$only_id"; then score_args+=(--only "$only_id"); fi
   docker run --rm --entrypoint python3 --network "$NETWORK" \
     --env-file "$CANONICAL_PROJECT/.env" \
@@ -210,7 +210,7 @@ verify_gold() {
     -v "$BENCHMARK_FILE:/benchmarks/$BENCHMARK_NAME:ro" \
     -v "$project:/workspace:ro" \
     -v "$WREN_HOME:/wren-home:ro" \
-    "$CLI_IMAGE" python3 /app/score.py --benchmark "/benchmarks/$BENCHMARK_NAME" --workspace /workspace --verify-gold
+    "$CLI_IMAGE" /app/score.py --benchmark "/benchmarks/$BENCHMARK_NAME" --workspace /workspace --verify-gold
 }
 
 chatbi_container() {
