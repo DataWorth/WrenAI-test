@@ -43,13 +43,23 @@ def run_query(sql, workspace):
         return None, (process.stdout + process.stderr).strip()[-12000:]
     payload = process.stdout.strip()
     try:
-        return json.loads(payload), None
+        value = json.loads(payload)
+        return value if isinstance(value, list) else [value], None
     except json.JSONDecodeError:
-        for line in reversed([line for line in payload.splitlines() if line.strip()]):
+        rows = []
+        for line in payload.splitlines():
+            if not line.strip():
+                continue
             try:
-                return json.loads(line), None
+                value = json.loads(line)
             except json.JSONDecodeError:
                 continue
+            if isinstance(value, list):
+                rows.extend(value)
+            else:
+                rows.append(value)
+        if rows:
+            return rows, None
         return None, "Cannot parse JSON result: " + payload[-4000:]
 
 
