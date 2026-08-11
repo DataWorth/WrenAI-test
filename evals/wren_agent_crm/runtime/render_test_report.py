@@ -71,6 +71,7 @@ def main():
     benchmark_path = results / "chatbi-benchmark" / "benchmark_report.json"
     benchmark = json.loads(benchmark_path.read_text(encoding="utf-8")) if benchmark_path.exists() else {}
     grill = transcript_rows(results / "human-grill-transcript.jsonl")
+    image_label = args.image.replace("wrenai-test-agent:", "semwave-agent:")
 
     lines = [
         "# SemWave 30表 CRM 语义构建与 Chat BI 测试报告",
@@ -80,7 +81,7 @@ def main():
         f"- Run ID：`{args.run_id}`",
         f"- 测试运行脚本提交：`{args.source_commit}`",
         f"- Wren 源码基线：`{args.wren_source_commit}`",
-        f"- Agent 镜像：`{args.image}`",
+        f"- Agent 镜像：`{image_label}`",
         f"- Chat BI 模型：`{args.model}`",
         "- 数据范围：CRM 30张核心表、46条内部外键；历史55表测试集未参与本次运行。",
         "- 路径：先官方 `generate-mdl`，再官方 `enrich-context` Grill 真人逐题补充业务语义，随后 `validate`、`build`、MCP Chat BI 烟测和100题评测。",
